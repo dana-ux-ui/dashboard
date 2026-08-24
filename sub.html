@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="format-detection" content="telephone=no" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="천만 서울시민의 의견을 접수받는 온라인 민원신청 창구입니다. 민원신청 종류는 생활불편, 건의, 질의 민원과 더불어 인권침해, 민생침해 등 다양한 시민의 소리를 접수하고 처리합니다.">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<link rel="shortcut icon" href="./images/logo_icon_114.png">
+	<link rel="apple-touch-icon" href="./images/logo_icon_114.png">
+	<link href="./css/reset.css" rel="stylesheet">
+	<link href="./css/layout.css" rel="stylesheet">
+	<link href="./css/swiper.min.css" rel="stylesheet">
+	<link href="./css/jqueryui.css" rel="stylesheet">
+	<link href="./css/contents.css" rel="stylesheet">
+	<script src="./js/jquery-1.12.4.min.js"></script>
+	<script src="./js/jquery.cookie.js"></script>
+	<script src="./js/hoverIntent.js"></script>
+	<script src="./js/swiper.min.js"></script>
+	<script src="./js/iscroll.js"></script>
+	<script src="./js/front.js"></script>
+	<script src="./js/jquery-ui.js"></script>
+	<title>공직자비리신고 | 시장 핫라인(공익제보) | 민원신청 | 응답소</title>
+</head>
+
+<body class="front_body">
+	<!-- skip menu -->
+	<ul class="skiplist">
+		<li class="skip pc_skip"><a href="#gnb">주메뉴 바로가기</a></li>
+		<li class="skip mb_skip"><a href="#mobile_gnb">주메뉴 바로가기</a></li>
+		<li class="skip"><a href="#content">본문내용으로 바로가기</a></li>
+	</ul>
+	<!-- //skip menu -->
+
+	<style>
+		/*  20260317 디지털정부 가이드 추가 */
+		.head-guide-zone {width: 100%;background: #f3f6f9;}
+		.head-guide-zone > .inner {width: 100%;}
+		.head-guide-zone > .inner > p {display: flex;gap: 5px;padding: 6px 0;color: #222;font-size: 13px;line-height: 1.2;}
+		.head-guide-zone > .inner > p:before {content: '';width: 24px;height: 16px;background: url("images/top-flag-korea.svg") no-repeat center;background-size: contain}
+
+		@media (max-width: 1151px) {
+		.head-guide-zone > .inner {width: 100%; min-width: 100%;}
+		.head-guide-zone > .inner > p {padding: 6px 0 6px 15px}
+		}
+
+	</style>
+	<!-- 20260317 디지털정부 가이드 추가 -->
+	<div class="head-guide-zone">
+		<div class="inner pix_in">
+			<p>이 누리집은 대한민국 공식 전자정부 누리집입니다.</p>
+		</div>
+	</div>
+
+	<div class="page_wrap">
+		<!-- 서울시 연동[위치이동 220803] -->
+		<div class="head_linkage_zone">
+			<!-- 연동영역 더미코딩 -->
+			<div style="background:#1085e5;height:48px;display:flex;align-items:center;justify-content: center;color:#fff;font-size:16px;line-height:1;" id="temp_header">서울시 연동영역</div>
+			<style>
+				@media (max-width:1023px) {
+					#temp_header {
+						height: 30px !important;
+						font-size: 14px !important;
+					}
+				}
+			</style>
+			<!-- // 연동영역 더미코딩[위치이동 220803] -->
+		</div>
+		<!-- // 서울시 연동 -->
+		<!-- header_wrap  -->
+		<header class="header_wrap">
+			<div class="head_group">
+				<!-- mobile -->
+				<a href="#" class="btn_mbmenucall"><span class="btn_mbmenucall_in"></span><span class="hdtext">메인메뉴 열기</span></a>
+				<div class="mobile_mainmenu_zone">
+					<div class="mainmenu_dim"></div>
+					<div class="mobile_mainmenu_wrap" id="mobile_gnb">
+						<div class="mbutil_low">
+							<span class="mbmenu_logo"><span class="hdtext">응답소</span></span>
+							<div class="mbutil_hlist_w">
+								<ul class="mbutil_hlist">
+
+
+									<!-- 로그인 전 -->
+									<li><a href="#" class="mbutil">회원가입</a></li>
+									<li><a href="#" class="mbutil">로그인</a></li>
+									<!-- // 로그인 전 -->
+
+								</ul>
+							</div>
+						</div>
+						<div class="mbmenu_low">
+							<div class="mbmenu_isc">
+								<ul class="mbmenu_vlist">
+									<li id="mb_gnb01">
+										<a href="#" class="mbmenu_one">민원신청</a>
+										<div class="mbmenu_two_vlist_w">
+											<ul class="mbmenu_two_vlist">
+												<li id="mbgnb01_01"><a href="#" class="mbmenu_two">시정일반 질의ㆍ건의</a></li>
+												<li id="mbgnb01_02"><a href="#" class="mbmenu_two">코로나19 방역수칙 위반 신고센터</a></li>
+												<li id="mbgnb01_03"><a href="#" class="mbmenu_two">코로나19 백신접종 신고</a></li>
+												<li id="mbgnb01_04"><a href="#" class="mbmenu_two">시장에게 바란다</a></li>
+												<li id="mbgnb01_05"><a href="#" class="mbmenu_two">시장 핫라인(공익제보)</a></li>
+												<li id="mbgnb01_06"><a href="#" class="mbmenu_two">투자출연기관 비리신고</a></li>
+												<li id="mbgnb01_07"><a href="#" class="mbmenu_two">하도급 부조리 신고</a></li>
+												<li id="mbgnb01_08"><a href="#" class="mbmenu_two">인권침해 구제신청</a></li>
+												<li id="mbgnb01_09"><a href="#" class="mbmenu_two">민생침해신고(눈물그만)</a></li>
+												<li id="mbgnb01_10"><a href="#" class="mbmenu_two">노동조사신고</a></li>
+												<li id="mbgnb01_11"><a href="#" class="mbmenu_two">지방세 이의신청</a></li>
+												<li id="mbgnb01_12"><a href="#" class="mbmenu_two">성평등 노동조사신고</a></li>
+												<li id="mbgnb01_14"><a href="#" class="mbmenu_two">적극행정 국민신청 제도</a></li>
+												<li id="mbgnb01_13"><a href="#" class="mbmenu_two define_blank" title="새창" target="_blank">공직비리 익명신고</a></li>
+											</ul>
+										</div>
+									</li>
+									<li id="mb_gnb02">
+										<a href="#" class="mbmenu_one">민원결과</a>
+										<div class="mbmenu_two_vlist_w">
+											<ul class="mbmenu_two_vlist">
+												<li id="mbgnb02_01"><a href="#" class="mbmenu_two">응답소 민원결과</a></li>
+												<li id="mbgnb02_02"><a href="#" class="mbmenu_two">120 민원결과</a></li>
+												<li id="mbgnb02_03"><a href="#" class="mbmenu_two">SNS 민원결과</a></li>
+												<li id="mbgnb02_04"><a href="#" class="mbmenu_two">방문ㆍ서신ㆍ유선 민원결과</a></li>
+												<li id="mbgnb02_05"><a href="#" class="mbmenu_two">국민신문고 민원결과</a></li>
+												<li id="mbgnb02_06"><a href="#" class="mbmenu_two">방문 신청한 서식민원 조회</a></li>
+											</ul>
+										</div>
+									</li>
+									<li id="mb_gnb03">
+										<a href="#" class="mbmenu_one">민원사례</a>
+										<div class="mbmenu_two_vlist_w">
+											<ul class="mbmenu_two_vlist">
+												<li id="mbgnb03_01"><a href="#" class="mbmenu_two">자주 찾는 민원사례</a></li>
+												<li id="mbgnb03_02"><a href="#" class="mbmenu_two">민원 공개사례</a></li>
+												<li id="mbgnb03_03"><a href="#" class="mbmenu_two">민원서비스 우수사례</a></li>
+											</ul>
+										</div>
+									</li>
+									<li id="mb_gnb04">
+										<a href="#" class="mbmenu_one">정보</a>
+										<div class="mbmenu_two_vlist_w">
+											<ul class="mbmenu_two_vlist">
+												<li id="mbgnb04_01"><a href="#" class="mbmenu_two">민원편람</a></li>
+												<li id="mbgnb04_02"><a href="#" class="mbmenu_two">무인민원발급기 위치</a></li>
+												<li id="mbgnb04_03"><a href="#" class="mbmenu_two">위원회 협의 내용 조회</a></li>
+												<li id="mbgnb04_04"><a href="#" class="mbmenu_two">행정서비스 헌장</a></li>
+												<li id="mbgnb04_05"><a href="#" class="mbmenu_two">응답소 민원 통계</a></li>
+											</ul>
+										</div>
+									</li>
+									<li id="mb_gnb05">
+										<a href="#" class="mbmenu_one">고객소통센터</a>
+										<div class="mbmenu_two_vlist_w">
+											<ul class="mbmenu_two_vlist">
+												<li id="mbgnb05_01"><a href="#" class="mbmenu_two">공지사항</a></li>
+												<li id="mbgnb05_02"><a href="#" class="mbmenu_two">SNS 긴급메시지</a></li>
+												<li id="mbgnb05_03"><a href="#" class="mbmenu_two">자주 묻는 질문</a></li>
+												<li id="mbgnb05_04"><a href="#" class="mbmenu_two">찾아가는 서울시청</a></li>
+												<li id="mbgnb05_05"><a href="#" class="mbmenu_two">민원안내관</a></li>
+												<li id="mbgnb05_06"><a href="#" class="mbmenu_two">응답소란</a></li>
+											</ul>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<a href="#" class="btn_mbmenuclose"><span class="hdtext">메인메뉴 닫기</span></a>
+					</div>
+				</div>
+				<!-- // mobile -->
+				<div class="pix_in">
+					<div class="header_both">
+						<div class="header_cell head_left">
+							<h1 class="header_toplogo"><a href="#" class="toplogo_link"><span class="hdtext">응답소</span></a></h1>
+						</div>
+						<div class="header_cell head_right">
+							<div class="headgnb_list_wrap" id="gnb">
+								<!-- 220728 변경 -->
+								<ul class="headgnb_list">
+									<li>
+										<a href="#" class="hgm">민원신청</a>
+										<div class="htm_vlist_z">
+											<div class="htm_vlist_pixin">
+												<div class="htm_vtitle_box">
+													<div class="htm_vtitle_group">
+														<p class="htm_vtitle_main">민원신청</p>
+														<p class="htm_vtitle_sub">
+															생활 속 불편사항 신고, <br>
+															각종 건의 및 질의 등을 위한 <br>
+															창구입니다.
+														</p>
+													</div>
+												</div>
+												<div class="htm_vlist_w">
+													<ul class="htm_vlist">
+														<li><a href="#" class="htm">시정일반 질의ㆍ건의</a></li>
+														<li><a href="#" class="htm">코로나19 방역수칙 위반 신고센터</a></li>
+														<li><a href="#" class="htm">코로나19 백신접종 신고</a></li>
+														<li><a href="#" class="htm">시장에게 바란다</a></li>
+														<li><a href="#" class="htm">시장 핫라인(공익제보)</a></li>
+													</ul>
+													<ul class="htm_vlist">
+														<li><a href="#" class="htm">투자출연기관 비리신고</a></li>
+														<li><a href="#" class="htm">하도급 부조리 신고</a></li>
+														<li><a href="#" class="htm">인권침해 구제신청</a></li>
+														<li><a href="#" class="htm">민생침해신고(눈물그만)</a></li>
+														<li><a href="#" class="htm">노동조사신고</a></li>
+													</ul>
+													<ul class="htm_vlist">
+														<li><a href="#" class="htm">지방세 이의신청</a></li>
+														<li><a href="#" class="htm">성평등 노동조사신고</a></li>
+														<li><a href="#" class="htm">적극행정 국민신청 제도</a></li>
+														<li><a href="#" class="htm">공직비리 익명신고</a></li>
+													</ul>
+												</div>
+											</div>
+										</div>
+									</li>
+									<li>
+										<a href="#" class="hgm">민원결과</a>
+										<div class="htm_vlist_z">
+											<div class="htm_vlist_pixin">
+												<div class="htm_vtitle_box">
+													<div class="htm_vtitle_group">
+														<p class="htm_vtitle_main">민원결과</p>
+														<p class="htm_vtitle_sub">
+															생활 속 불편사항 신고, <br>
+															각종 건의 및 질의 등을 위한 <br>
+															창구입니다.
+														</p>
+													</div>
+												</div>
+												<div class="htm_vlist_w">
+													<ul class="htm_vlist">
+														<li><a href="#" class="htm">응답소 민원결과</a></li>
+														<li><a href="#" class="htm">120 민원결과</a></li>
+														<li><a href="#" class="htm">SNS 민원결과</a></li>
+														<li><a href="#" class="htm">방문ㆍ서신ㆍ유선 민원결과</a></li>
+														<li><a href="#" class="htm">국민신문고 민원결과</a></li>
+														<li><a href="#" class="htm">방문 신청한 서식민원 조회</a></li>
+													</ul>
+												</div>
+											</div>
+										</div>
+									</li>
+									<li>
+										<a href="#" class="hgm">민원사례</a>
+										<div class="htm_vlist_z">
+											<div class="htm_vlist_pixin">
+												<div class="htm_vtitle_box">
+													<div class="htm_vtitle_group">
+														<p class="htm_vtitle_main">민원사례</p>
+														<p class="htm_vtitle_sub">
+															생활 속 불편사항 신고, <br>
+															각종 건의 및 질의 등을 위한 <br>
+															창구입니다.
+														</p>
+													</div>
+												</div>
+												<div class="htm_vlist_w">
+													<ul class="htm_vlist">
+														<li><a href="#" class="htm">자주 찾는 민원사례</a></li>
+														<li><a href="#" class="htm">민원 공개사례</a></li>
+														<li><a href="#" class="htm">민원서비스 우수사례</a></li>
+													</ul>
+												</div>
+											</div>
+										</div>
+									</li>
+									<li>
+										<a href="#" class="hgm">정보</a>
+										<div class="htm_vlist_z">
+											<div class="htm_vlist_pixin">
+												<div class="htm_vtitle_box">
+													<div class="htm_vtitle_group">
+														<p class="htm_vtitle_main">정보</p>
+														<p class="htm_vtitle_sub">
+															생활 속 불편사항 신고, <br>
+															각종 건의 및 질의 등을 위한 <br>
+															창구입니다.
+														</p>
+													</div>
+												</div>
+												<div class="htm_vlist_w">
+													<ul class="htm_vlist">
+														<li><a href="#" class="htm">민원편람</a></li>
+														<li><a href="#" class="htm">무인민원발급기 위치</a></li>
+														<li><a href="#" class="htm">위원회 협의 내용 조회</a></li>
+														<li><a href="#" class="htm">행정서비스 헌장</a></li>
+														<li><a href="#" class="htm">응답소 민원 통계</a></li>
+													</ul>
+												</div>
+											</div>
+										</div>
+									</li>
+									<li>
+										<a href="#" class="hgm">고객소통센터</a>
+										<div class="htm_vlist_z">
+											<div class="htm_vlist_pixin">
+												<div class="htm_vtitle_box">
+													<div class="htm_vtitle_group">
+														<p class="htm_vtitle_main">고객소통센터</p>
+														<p class="htm_vtitle_sub">
+															생활 속 불편사항 신고, <br>
+															각종 건의 및 질의 등을 위한 <br>
+															창구입니다.
+														</p>
+													</div>
+												</div>
+												<div class="htm_vlist_w">
+													<ul class="htm_vlist">
+														<li><a href="#" class="htm">공지사항</a></li>
+														<li><a href="#" class="htm">SNS 긴급메시지</a></li>
+														<li><a href="#" class="htm">자주 묻는 질문</a></li>
+														<li><a href="#" class="htm">찾아가는 서울시청</a></li>
+														<li><a href="#" class="htm">민원안내관</a></li>
+														<li><a href="#" class="htm">응답소란</a></li>
+													</ul>
+												</div>
+											</div>
+										</div>
+									</li>
+								</ul>
+								<!-- // 220728 변경 -->
+							</div>
+							<div class="headelse_list_wrap">
+								<div class="headelse_list_in">
+									<ul class="util_list">
+
+
+										<!-- 로그인 전 -->
+										<li><a href="#" class="util hasico ico_01"><span class="util_ein">로그인</span></a></li>
+										<li><a href="#" class="util hasico ico_02"><span class="util_ein">회원가입</span></a></li>
+										<!-- // 로그인 전 -->
+
+
+									</ul>
+								</div>
+								<!-- [2차전달] 220419 HTML 변경 -->
+								<div class="headgnb_search_w">
+									<a href="javascript:;" class="btn_headsearch" data-closeText="검색창 닫기">
+										<span class="hdtext opencase">검색</span>
+									</a>
+								</div>
+								<!-- // [2차전달] 220419 HTML 변경 -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 검색 레이어 -->
+			<div class="search_toplayer">
+				<div class="search_topfield_w">
+					<div class="search_topfield">
+						<label for="search_topitem" class="hdtext">검색어 입력</label>
+						<input type="text" id="search_topitem" class="search_topinput" title="검색어 입력" placeholder="검색어를 입력해주세요.">
+						<a href="javascript:;" class="btn_topsearch_submit" title="검색"><span class="hdtext">검색</span></a>
+					</div>
+					<div class="search_keyword_low">
+						<div class="top_keyword_label_w"><span class="top_keyword_label">이슈검색어</span></div>
+						<ul class="top_keyword_flist">
+							<li><a href="javascript:;" class="top_keyword">#이관민원 조회</a></li>
+							<li><a href="javascript:;" class="top_keyword">#백신접종장소</a></li>
+							<li><a href="javascript:;" class="top_keyword">#코로나19 QnA</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!-- // 검색 레이어 -->
+		</header>
+		<!-- // header_wrap -->
+		<section class="mid_contents">
+			<!-- submap -->
+			<div class="submap_zone_parent">
+				<div class="submap_zone">
+					<div class="sub_map_pixin">
+						<a href="/" class="sub_map_home"><span class="hdtext">홈</span></a>
+						<div class="sub_map_fxwrap">
+							<div class="sub_map_fxitem">
+								<div class="sub_map_toggle_wrap">
+									<a href="javascript:;" class="map_toggle_current">민원신청</a>
+									<div class="map_depth_vlist_wrap">
+										<ul class="map_depth_vlist">
+											<li class="active"><a href="#" class="map_depth">민원신청</a></li>
+											<li><a href="#" class="map_depth">민원결과</a></li>
+											<li><a href="#" class="map_depth">민원사례</a></li>
+											<li><a href="#" class="map_depth">정보</a></li>
+											<li><a href="#" class="map_depth">고객소통센터</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="sub_map_fxitem">
+								<div class="sub_map_toggle_wrap">
+									<a href="javascript:;" class="map_toggle_current">시장 핫라인(공익제보)</a>
+									<div class="map_depth_vlist_wrap">
+										<ul class="map_depth_vlist">
+											<li><a href="#" class="map_depth">시정일반 질의ㆍ건의</a></li>
+											<li><a href="#" class="map_depth">코로나19 방역수칙 위반 신고센터</a></li>
+											<li><a href="#" class="map_depth">코로나19 백신접종 신고</a></li>
+											<li><a href="#" class="map_depth">시장에게 바란다</a></li>
+											<li class="active"><a href="#" class="map_depth">시장 핫라인(공익제보)</a></li>
+											<li><a href="#" class="map_depth">투자출연기관 비리신고</a></li>
+											<li><a href="#" class="map_depth">하도급 부조리 신고</a></li>
+											<li><a href="#" class="map_depth">인권침해 구제신청</a></li>
+											<li><a href="#" class="map_depth">민생침해신고(눈물그만)</a></li>
+											<li><a href="#" class="map_depth">노동조사신고</a></li>
+											<li><a href="#" class="map_depth">지방세 이의신청</a></li>
+											<li><a href="#" class="map_depth">성평등 노동조사신고</a></li>
+											<li><a href="#" class="map_depth">적극행정 국민신청 제도</a></li>
+											<li><a href="#" class="map_depth define_blank" title="새창" target="_blank">공직비리 익명신고</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="sub_map_fxitem">
+								<div class="sub_map_toggle_wrap">
+									<a href="javascript:;" class="map_toggle_current">공직자비리신고</a>
+									<div class="map_depth_vlist_wrap">
+										<ul class="map_depth_vlist">
+											<li class="active"><a href="#" class="map_depth">공직자비리신고</a></li>
+											<li><a href="#" class="map_depth">공익신고</a></li>
+											<li><a href="#" class="map_depth">갑질피해신고</a></li>
+											<li><a href="#" class="map_depth">부정청탁 및 금품 등 수수신고</a></li>
+											<li><a href="#" class="map_depth">퇴직공무원 특혜제공 신고</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- // submap -->
+			<div class="subcont_zone" id="content">
+				<!-- subdep2_vobj_zone -->
+				<div class="subdep2_vobj_zone">
+					<h2 class="subdep2_vtitle">시장 핫라인(공익제보)</h2>
+					<div class="sctab_hlist_w">
+						<ul class="sctab_hlist divtype2" id="contents_hlist"> <!-- 250318 탭두개짜리 class: divtype2-->
+							<li class="active"><a href="#" class="sctab">부패신고</a></li>
+							<li><a href="#" class="sctab">공익신고</a></li>
+						</ul>
+					</div>
+				</div>
+				<!-- // subdep2_vobj_zone -->
+				<div class="sctab_contents" id="contents_group">
+					<!-- subdep3_vobj_zone -->
+					<!-- 250318 타이틀 옆 버튼 추가 -->
+					<div class="subdep3_vobj_zone dtype4">
+						<h3 class="subdep3_vtitle">부패신고</h3>
+						<a href="javascript:;" id="btn_lawyer_call_01" class="btn_nyico_text btn_lawyer_call" title="안심변호사 안내(상담 및 대리신고)"><span class="btn_nyico_text_in">안심변호사 안내<br class="mb_br">(상담 및 대리신고)</span></a>
+					</div>
+					<!--// 250318 타이틀 옆 버튼 추가 -->
+					<!-- // subdep3_vobj_zone -->
+					<div class="subcont_wrap mtype4">
+						<div class="sct_vbox ico_public">
+							<div class="sct_vbox_cont">
+								<ul class="vtextdot_list">
+									<li><strong>공직자가 지위 또는 권한을 남용하거나 법령을 위반하여 자기 또는 제3자의 이익을 도모하는 행위 등을 신고</strong>하는 것이며, 「부패방지 및 국민권익위원회의 설치와 운영에 관한 법률」에 따라 신고자의 비밀이 보호됩니다.</li>
+									<li>조사기간 : 60일 이내. 필요한 경우 조사기간 연장 가능 <span class="vtextdot_sub">(서울특별시 공익제보 보호 및 지원에 관한 조례 제13조 제5항)</span></li>
+									<li>전화상담 및 문의 : <strong>서울특별시 조사담당관 (02)2133-4800</strong></li>
+								</ul>
+								<div class="btn_sctobj_w ftype2">
+									<div class="btn_sctobj_cell"><!-- <a href="javascript:;" id="btn_lawyer_call_01" class="btn_smobjbox btn_smobjbox_type2 btn_lawyer_call">공익제보 <br class="mb_br">안심변호사 안내<br class="mb_br">(상담 및 대리신고)</a>--></div> 
+									<div class="btn_sctobj_cell"><a href="./hotline_public_reg.do" class="btn_sctobj">민원 신청하기</a></div>
+								</div>
+							</div>
+						</div>
+
+						<!-- toggle_vitem_wrap -->
+						<div class="toggle_vitem_wrap">
+							<div class="toggle_vitem">
+								<a href="javascript:;" class="toggle_vbar">
+									<div class="toggle_vbar_text">부패행위</div>
+								</a>
+								<div class="toggle_vcont">
+									<ul class="bullet_list">
+										<li>공직자 직무와 관련하여 그 지위 또는 권한을 남용하거나 법령을 위반하여 자기 또는 제3자의 이익을 도모하는 행위를 말합니다.<br>공직자 : 서울특별시와 소속행정기관·시가 설립하거나 출자한 지방공기업의 임직원 및 자치구의 공무원</li>
+										<li>공공기관의 예산사용, 공공기관 재산의 취득·관리·처분 또는 공공기관을 당사자로 하는 계약의 체결 및 그 이행에 있어서 법령을 위반하여 공공기관에 대하여 재산상 손해를 가하는 행위</li>
+										<li>위에서 규정한 행위나 그 은폐를 강요, 권고, 제의, 유인하는 행위</li>
+									</ul>
+								</div>
+							</div>
+							<div class="toggle_vitem">
+								<a href="javascript:;" class="toggle_vbar">
+									<div class="toggle_vbar_text">법령</div>
+								</a>
+								<div class="toggle_vcont">
+									<ul class="bullet_list">
+										<li>부패방지 및 국민권익위원회의 설치와 운영에 관한 법률</li>
+										<li>부패방지 및 국민권익위원회의 설치와 운영에 관한 법률시행령</li>
+										<li>서울특별시 부조리 신고 및 보상금 지급에 관한 조례</li>
+										<li>서울특별시 공익제보 보호 및 지원에 관한 조례</li>
+									</ul>
+								</div>
+							</div>
+							<div class="toggle_vitem">
+								<a href="javascript:;" class="toggle_vbar">
+									<div class="toggle_vbar_text">부패행위신고 안내</div>
+								</a>
+								<div class="toggle_vcont">
+									<div class="text_item_group">
+										<div class="text_item">
+											<div class="text_title_row">
+												<p class="text_title">공직자 부패행위 신고대상</p>
+											</div>
+											<div class="text_content_row">
+												<ul class="bullet_list">
+													<li><span class="else_case">「부패방지 및 국민권익위원회의 설치와 운영에 관한 법률」</span>부패행위</li>
+													<li>서울시 공무원 행동강령 위반행위</li>
+													<li>
+														서울특별시 부조리 신고 및 보상금 지급에 관한 조례 제3조
+														<div class="tail_text_box">
+															<ul class="dash_text_list">
+																<li>공무원 등이 업무와 관련하여 금품을 수수하거나 향응을 제공받는 행위</li>
+																<li>공무원 등이 직위를 이용하여 부당한 이득을 얻거나 의무 불이행에 따라 시 재정에 손실을 끼친 행위</li>
+																<li>자기 또는 타인의 부당한 이익을 위하여 다른 공무원의 공정한 직무수행을 저해하는 알선·청탁행위</li>
+																<li>그 밖에 시의 청렴도를 훼손한 부조리 행위</li>
+															</ul>
+														</div>
+													</li>
+												</ul>
+											</div>
+										</div>
+										<div class="text_item">
+											<div class="text_title_row">
+												<p class="text_title">공직자 부패행위 신고방법</p>
+											</div>
+											<div class="text_content_row">
+												<ul class="bullet_list type2">
+													<li>
+														시민은 누구든지 부패행위를 알게 된 때는 서울시에 신고할 수 있습니다.
+														<div class="tail_text_box">
+															<p class="tail_text_title">신고안내</p>
+															<ul class="bullet_list">
+																<li>
+																	<p class="bullet_main_text">온라인신고</p>
+																	<div class="bullet_sub_zone">
+																		<div class="bullet_sub_wrap">
+																			<p class="bullet_sub_para">신고하기 버튼을 클릭하시면 온라인으로 쉽게 신고할 수 있습니다.</p>
+																			<div class="bullet_sub_else_w">
+																				<a href="#" class="btn_smobjbox type2">신고하기</a>
+																			</div>
+																		</div>
+																	</div>
+																</li>
+																<li>
+																	<p class="bullet_main_text">우편/방문 신고, 팩스 신고(신청서를 다운 받아 작성하신 후 신청)</p>
+																	<div class="bullet_sub_zone">
+																		<div class="bullet_sub_wrap">
+																			<p class="bullet_sub_para">주소 : (04515) 서울시 중구 덕수궁길 15(서소문동37) 서소문청사 5동 2층 감사위원회<a href="#" class="normal_link" target="_blank" title="공익제보센터 새창열기">[공익제보센터]</a></p>
+																		</div>
+																		<div class="bullet_sub_wrap">
+																			<p class="bullet_sub_para">Fax : <span class="emp_number">(02)2133-1309</span></p>
+																			<div class="bullet_sub_else_w">
+																				<a href="javascript:;" class="btn_smico_text" title="신청서 내려받기 다운로드"><span class="btn_smico_text_in">신청서 내려받기</span></a>
+																			</div>
+																		</div>
+																	</div>
+																</li>
+															</ul>
+														</div>
+													</li>
+													<li>
+														신고서 기재사항
+														<div class="contain_text_wrap">
+															<p class="contain_text">신고자의 이름, 주소 및 연락처 등 인적사항, 신고취지 및 이유, 증거자료 (다만 신고자가 익명을 원할 때에는 변호사가 이를 대리하여 접수가능)</p>
+															<p class="important_text mt5">피제보자를 특정하지 않거나 증거자료 등이 첨부되지 않을 경우, 공익제보 보호 및 지원에 관한 조례 시행규칙 제3조에 따라 접수되지 아니하고 ‘보완요청’될 수 있음</p>
+														</div>
+													</li>
+												</ul>
+											</div>
+										</div>
+										<div class="text_item">
+											<div class="text_title_row">
+												<p class="text_title">공직자 부패행위 신고 상담</p>
+											</div>
+											<div class="text_content_row">
+												<ul class="bullet_list">
+													<li>
+														전화상담 <span class="emp_number">02)2133-4800</span>
+														<div class="bullet_sub_zone">
+															<div class="bullet_sub_wrap">
+																<p class="important_text">모든 신고는 기명문서로 해야 하므로 전화로는 상담만 가능합니다.</p>
+																<div class="bullet_sub_else_w">
+																	<a href="javascript:;" id="btn_lawyer_call_02" class="btn_smobjbox">공익제보 안심변호사 안내(상담 및 대리신고)</a>
+																</div>
+															</div>
+														</div>
+													</li>
+												</ul>
+											</div>
+										</div>
+										<div class="text_item">
+											<div class="text_title_row">
+												<p class="text_title">공직자 부패행위 신고처리 절차</p>
+											</div>
+											<div class="text_content_row">
+												<ul class="bullet_list">
+													<li>서울시에 공직자 부패행위 신고가 접수되면 사실 확인 절차를 거쳐 10일 이내에 조사여부를 통지하며 조사를 실시하기로 결정한 때에는 60일 이내에 조사를 완료하여 그 결과를 신고자에게 알려 드립니다.</li>
+													<li>신고 내용이 사실로 확인된 경우 서울시는 신고자에게 공직자 부패행위 신고 보상금을 지급하고 있습니다.</li>
+													<li>
+														서울시는 신고자가 안심하고 공직자 부패행위를 신고할 수 있도록 신고자, 협조자 등에 대한 신분보장, 신변보호, 비밀보장 제도를 운영 하고 있습니다.
+														<p class="important_text">단, 신고자가 신고내용이 허위라는 사실을 알았거나 알 수 있었음에도 불구하고 신고한 경우 관련 규정에 따른 보호를 받지 못합니다.</p>
+													</li>
+												</ul>
+												<div class="diagram_w">
+													<img src="images/diagram_public.png" alt="공직자 부패행위 신고처리 절차 다이어그램 - 자세한 설명은 아래와 같습니다.">
+													<div class="hdtext">
+														<ul>
+															<li>
+																<p>공익제보</p>
+																<p>해당기업, 시, 시의원,공익제보 지원위원회,시민단체 등을 통해 제보</p>
+																<p>시민</p>
+															</li>
+															<li>
+																<p>접수</p>
+																<p>공익제보센터</p>
+																<p>서울시</p>
+															</li>
+															<li>
+																<p>신고내용 확인 및 조사여부 통지</p>
+																<p>신고내용 확인 및 조사여부 통지(10일 이내)</p>
+																<p>서울시</p>
+															</li>
+															<li>
+																<p>철저한 조사</p>
+																<p>지도, 감독, 규제, 조사 등권한 있는 행정기관(60일 이내)</p>
+																<p>시 사무와 관계없는 경우 관계기관 이첩</p>
+																<p>서울시</p>
+															</li>
+															<li>
+																<p>결과통보 및 보호 보상 처리</p>
+																<p>보호조치 요구 및 보상금 신청이 있는 경우 절차에 따라 처리</p>
+																<p>서울시</p>
+															</li>
+														</ul>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="toggle_vitem">
+								<a href="javascript:;" class="toggle_vbar">
+									<div class="toggle_vbar_text">부패행위 사례</div>
+								</a>
+								<div class="toggle_vcont">
+									<div class="text_item_group">
+										<div class="text_item">
+											<div class="text_title_row">
+												<p class="text_title">공직자 부패행위 신고대상</p>
+											</div>
+											<div class="text_content_row">
+												<div class="text_guide_table_w">
+													<table class="text_guide_table">
+														<caption>공직자 부패행위 신고대상표</caption>
+														<colgroup>
+															<col style="width:20%;" />
+															<col style="width:40%;" />
+															<col />
+														</colgroup>
+														<thead>
+															<tr>
+																<th scope="col" class="type2"><span class="th_intext">구분</span></th>
+																<th scope="col"><span class="th_intext">공직자의 직무와 관련한 부패행위</span></th>
+																<th scope="col"><span class="th_intext">공공기관의 예산사용 등과 관련한 부패행위</span></th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr>
+																<td class="type2"><span class="emp_tdtext">요건</span></td>
+																<td>
+																	공직자가 직무와 관련하여 <br class="pc_br">
+																	그 지위 또는 권한을 남용하거나, <br class="pc_br">
+																	법령을 위반하여 자기 또는 제3자의 이익을 도모하는 행위
+																</td>
+																<td>
+																	공공기관의 예산 사용, 공공기관의 재산의 <br class="pc_br">
+																	취득·관리·처분 또는 공공기관을 당사로 하는 계약의 <br class="pc_br">
+																	체결 및 그 이행에 있어서 법령을 위반하여 공공기관에 <br class="pc_br">
+																	대하여 재산상 손해를 가하는 행위
+																</td>
+															</tr>
+															<tr>
+																<td class="type2"><span class="emp_tdtext">보충설명</span></td>
+																<td>
+																	<ul class="indent_text_list">
+																		<li>
+																			<span class="indent_text_main">1.</span>
+																			<span class="indent_text_sub">“공직자”란 「부패방지 및 국민권익위원회의 설치와 운영에 관한 법률」 제2조에 따른 “공직자”를 말함</span>
+																		</li>
+																		<li>
+																			<span class="indent_text_main">2.</span>
+																			<span class="indent_text_sub">직무와 관련이 없는 사적인 분쟁은 제외<br>(예: 주택·상가의 임차관련 분쟁, 금전차용 관련 분재 등)</span>
+																		</li>
+																	</ul>
+																</td>
+																<td>
+																	공공기관의 예산 사용, 공공기관의 재산의 <br class="pc_br">
+																	취득·관리·처분 또는 공공기관을 당사로 하는 계약의 <br class="pc_br">
+																	체결 및 그 이행에 있어서 법령을 위반하여 공공기관에 <br class="pc_br">
+																	대하여 재산상 손해를 가하는 행위
+																</td>
+															</tr>
+															<tr>
+																<td class="type2"><span class="emp_tdtext">혐의대상자</span></td>
+																<td>해당공직자</td>
+																<td>해당공직자 또는 사인(私人)</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+												<p class="important_text mt10">위의 두 가지 유형의 직접적인 부패행위 및 그 은폐를 강요, 권고, 제의, 유인하는 간접적인 행위까지 부패행위로 규정함</p>
+											</div>
+										</div>
+										<div class="text_item">
+											<div class="text_title_row">
+												<p class="text_title">부정행위 사례 예시</p>
+											</div>
+											<div class="text_content_row">
+												<ul class="bullet_list type2">
+													<li>
+														금품이나 향응을 주고 받는 행위
+														<div class="tail_text_box">
+															<div class="dash_both">
+																<ul class="dash_text_list">
+																	<li>인·허가 과정에서 금품 수수</li>
+																	<li>직무관련업체의 법인카드 사용</li>
+																	<li>명절, 휴가 명목의 금품 수수</li>
+																	<li>부하직원으로부터 승진 명목의 금품 수수</li>
+																</ul>
+																<ul class="dash_text_list">
+																	<li>계약알선·공사편의 대가의 금품 수수</li>
+																	<li>직무관련업체의 부서 회식비 대납</li>
+																	<li>접대성, 해외여행, 골프 또는 도박</li>
+																</ul>
+															</div>
+														</div>
+													</li>
+													<li>
+														공금을 횡령하거나 부당하게 집행하는 행위 행위
+														<div class="tail_text_box">
+															<div class="dash_both">
+																<ul class="dash_text_list">
+																	<li>직원급여 등을 부풀려 횡령</li>
+																	<li>휴가일수 조작 및 연가 보상 수령</li>
+																	<li>허위출장 또는 사무용품을 구입한 것으로 조작하여 부서 운영비 조성</li>
+																</ul>
+																<ul class="dash_text_list">
+																	<li>가족수당, 시간외수당 부정 수령</li>
+																	<li>일시 사역인부의 출·퇴근 조작 및 횡령</li>
+																</ul>
+															</div>
+														</div>
+													</li>
+													<li>
+														업무를 부당하게 처리하는 행위
+														<div class="tail_text_box">
+															<div class="dash_both">
+																<ul class="dash_text_list">
+																	<li>특정인의자녀를 부당 채용</li>
+																	<li>불필요한 민원서류 과다요구</li>
+																</ul>
+																<ul class="dash_text_list">
+																	<li>징계처분 요구자를 승진 후 징계요구</li>
+																	<li>특정 기관·단체에 특혜성의 보조금 지원</li>
+																</ul>
+															</div>
+														</div>
+													</li>
+													<li>
+														복무기강 해이 및 품위손상 행위
+														<div class="tail_text_box">
+															<div class="dash_both">
+																<ul class="dash_text_list">
+																	<li>출퇴근 시간 미준수 및 근무지 무단이탈</li>
+																	<li>근무시간 중 음주행위 및 음주운전</li>
+																	<li>직원간 인격 침해성 폭언 또는 폭력행사</li>
+																</ul>
+																<ul class="dash_text_list">
+																	<li>허위 출장 후 개인용무 수행</li>
+																	<li>공무국외여행과 다른 일정 수행</li>
+																	<li>직장내 성희롱, 성추행 및 성폭행</li>
+																</ul>
+															</div>
+														</div>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="toggle_vitem">
+								<a href="javascript:;" class="toggle_vbar">
+									<div class="toggle_vbar_text">채용비리 신고 &middot; 제보 안내</div>
+								</a>
+								<div class="toggle_vcont">
+									<ul class="bullet_list">
+										<li>서울시에서는 2018.11.14(수)부터 신규채용, 비정규직 전환 실태와 관련한 감사를 진행하고 있습니다.</li>
+										<li>채용과정의 공정성, 특혜 여부 등에 대해 시민 여러분의 제보를 기다립니다.</li>
+										<li>
+											조금이라도 의심이 가는 사항을 제보하여 주시면, 서울시 감사위원회에서 즉각적으로 조사하여 철저히 규명하도록 하겠습니다.
+											<div class="tail_text_box">
+												<ul class="dash_text_list">
+													<li>신고대상 : 서울시 산하 공사.공단. 투자출연기관, 공직유관단체</li>
+													<li>신고내용 : 신규채용 및 정규직으로 전환과 관련하여 인사청탁, 기관장·임직원의 부당지시, 서류, 면접결과 조작, 인사 관련 금품·향응 수수 등</li>
+												</ul>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<div class="toggle_vitem">
+								<a href="javascript:;" class="toggle_vbar">
+									<div class="toggle_vbar_text">자주하는 질문</div>
+								</a>
+								<div class="toggle_vcont">
+									<!-- accodian -->
+									<div class="accodian_ui_wrap">
+										<div class="acc_vitem">
+											<a href="javascript:;" class="acc_bar">
+												<span class="qa_bullet qns"><span class="qa_bword">Q</span><span class="hdtext">질문</span></span>
+												<div class="qa_text">부패신고 제도는?</div>
+											</a>
+											<div class="acc_cont">
+												<span class="qa_bullet ans"><span class="qa_bword">A</span><span class="hdtext">답변</span></span>
+												<div class="qa_cont">
+													<div class="qa_intext">
+														<p class="acc_normal_para">부패신고는 조직의 구조적이고 은밀한 부패를 척결하기 위해 개인이 행하는 용기있는 행동이며, 나아가 기존의 외부 또는 내부통제가 지닌 한계를 극복하고, 행정의 책임성 제고와 함께 우리 사회의 고질적 부패를 척결하기 위한 효율적인 방법으로 투명한 사회를 건설하기 위한 수단입니다.</p>
+														<ul class="indent_text_list mt10">
+															<li>
+																<span class="indent_text_main">※ 근거법령 : </span>
+																<span class="indent_text_sub">부패방지 및 국민권익위원회의 설치와 운영에 관한 법률(제2조, 제29조, 제55조~제61조)<br>동법 시행령 제54조~제64조 서울특별시 부조리 신고 및 보상금 지급에 관한 조례(제2조~제5조의3)</span>
+															</li>
+														</ul>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="acc_vitem">
+											<a href="javascript:;" class="acc_bar">
+												<span class="qa_bullet qns"><span class="qa_bword">Q</span><span class="hdtext">질문</span></span>
+												<div class="qa_text">신고대상 『부패행위』 는?</div>
+											</a>
+											<div class="acc_cont">
+												<span class="qa_bullet ans"><span class="qa_bword">A</span><span class="hdtext">답변</span></span>
+												<div class="qa_cont">
+													<div class="qa_intext">
+														<p class="acc_normal_para">서울특별시 부조리 신고 및 보상금 지급에 관한 조례 제3조에서 정하고 있는 행위를 신고대상으로 하고 있습니다.</p>
+														<ul class="indent_text_list mt10">
+															<li>
+																<span class="indent_text_main">1.</span>
+																<span class="indent_text_sub">공무원 등이 업무와 관련하여 금품을 수수하거나 향응을 제공받는 행위</span>
+															</li>
+															<li>
+																<span class="indent_text_main">2.</span>
+																<span class="indent_text_sub">공무원 등이 직위를 이용하여 부당한 이득을 얻거나 의무 불이행에 따라 시 재정에 손실을 끼친 행위</span>
+															</li>
+															<li>
+																<span class="indent_text_main">3.</span>
+																<span class="indent_text_sub">자기 또는 타인의 부당한 이익을 위하여 다른 공무원의 공정한 직무수행을 저해하는 알선,청탁행위</span>
+															</li>
+															<li>
+																<span class="indent_text_main">4.</span>
+																<span class="indent_text_sub">그 밖에 시의 청렴도를 훼손한 부조리 행위</span>
+															</li>
+														</ul>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="acc_vitem">
+											<a href="javascript:;" class="acc_bar">
+												<span class="qa_bullet qns"><span class="qa_bword">Q</span><span class="hdtext">질문</span></span>
+												<div class="qa_text">부패행위 신고대상 공직자의 범위는?</div>
+											</a>
+											<div class="acc_cont">
+												<span class="qa_bullet ans"><span class="qa_bword">A</span><span class="hdtext">답변</span></span>
+												<div class="qa_cont">
+													<div class="qa_intext">
+														<p class="acc_normal_para">서울특별시 부조리 신고 및 보상금 지급에 관한 조례 제3조에서 정하고 있는 공직자를 신고대상으로 하고 있습니다.</p>
+														<ul class="dash_text_list mt10">
+															<li>서울특별시(이하 “시”라 한다)와 소속행정기관, 시가 설립하거나 출자한 지방공기업의 임직원 및 자치구의 공무원</li>
+														</ul>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="acc_vitem">
+											<a href="javascript:;" class="acc_bar">
+												<span class="qa_bullet qns"><span class="qa_bword">Q</span><span class="hdtext">질문</span></span>
+												<div class="qa_text">부패행위 신고대상 공공기관의 범위는?</div>
+											</a>
+											<div class="acc_cont">
+												<span class="qa_bullet ans"><span class="qa_bword">A</span><span class="hdtext">답변</span></span>
+												<div class="qa_cont">
+													<div class="qa_intext">
+														<p class="acc_normal_para">서울특별시 행정감사 규칙 제2조에 규정된 감사대상기관으로</p>
+														<ul class="indent_text_list mt10">
+															<li>
+																<span class="indent_text_main">1.</span>
+																<span class="indent_text_sub">서울특별시(이하 "시"라 한다) 본청 및 그 소속기관</span>
+															</li>
+															<li>
+																<span class="indent_text_main">2.</span>
+																<span class="indent_text_sub">시금고 및 시비 보조단체·기관</span>
+															</li>
+															<li>
+																<span class="indent_text_main">3.</span>
+																<span class="indent_text_sub">시에서 설립한 지방공사·공단과 시에서 출자 또는 출연한 법인</span>
+															</li>
+															<li>
+																<span class="indent_text_main">4.</span>
+																<span class="indent_text_sub">자치구, 자치구금고 및 자치구비 보조단체·기관 (「지방자치법」제167조부터 제171조까지의 규정에 따른 사항에 한한다)</span>
+															</li>
+														</ul>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="acc_vitem">
+											<a href="javascript:;" class="acc_bar">
+												<span class="qa_bullet qns"><span class="qa_bword">Q</span><span class="hdtext">질문</span></span>
+												<div class="qa_text">부패행위 신고방법은?</div>
+											</a>
+											<div class="acc_cont">
+												<span class="qa_bullet ans"><span class="qa_bword">A</span><span class="hdtext">답변</span></span>
+												<div class="qa_cont">
+													<div class="qa_intext">
+														<p class="acc_normal_para">서울특별시 부조리 신고 및 보상금 지급에 관한 조례 제4조, 서울특별시 공익제보 보호 및 지원에 관한 조례 제8조에 따라 부패행위 신고를 접수하고 있으며, 신고방법은 다음과 같습니다.</p>
+														<ul class="dash_text_list mt15">
+															<li>누구든지 서울시와 관계된 내용에 대하여 부패행위를 알게 된 때에는 우리시에 신고할 수 있으며 부패행위를 신고하고자 하는 경우, 신고자의 인적사항과 신고취지 및 이유를 기재한 기명의 문서와 신고대상과 부패행위의 증거 등을 함께 제출하시면 됩니다.<br>다만, 익명을 원 할 때에는 변호사가 이를 대리하여 접수할 수 있으며 시는 별도 조사가 필요한 경우를 제외하면 변호사와 논의합니다.</li>
+														</ul>
+														<p class="important_text mt15">단, 신고자가 신고내용이 허위라는 사실을 알았거나 알수 있었음에도 불구하고 신고하는 경우 관련 규정에 따른 보호를 받지 못합니다.<br>신고방법은 방문, 우편, 팩스, 서울시 홈페이지를 이용하시면 됩니다.</p>
+														<p class="important_text mt15">
+															모든 신고는 기명문서로 해야 하므로 전화로는 상담만 가능<br>
+															방문, 우편 : (04515) 서울시 중구 덕수궁길 15(서소문동37) 서소문청사 5동 2층 조사담당관[공익제보조사팀]<br>
+															팩스 : 02-2133-1309<br>
+															서울시홈페이지 : 공익제보센터
+														</p>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="acc_vitem">
+											<a href="javascript:;" class="acc_bar">
+												<span class="qa_bullet qns"><span class="qa_bword">Q</span><span class="hdtext">질문</span></span>
+												<div class="qa_text">부패행위와 관련된 자가 신고를 할 수 있습니까?</div>
+											</a>
+											<div class="acc_cont">
+												<span class="qa_bullet ans"><span class="qa_bword">A</span><span class="hdtext">답변</span></span>
+												<div class="qa_cont">
+													<div class="qa_intext">
+														<p class="acc_normal_para">부패방지 및 국민권익위원회의 설치와 운영에 관한 법률」 제55조(부패행위의 신고), 제56조(공직자의 부패행위 신고의무), 서울특별시 부조리 신고 및 상금 지급에 관한 조례 제3조(신고대상), 서울특별시 공익제보 보호 및 지원에 관한 조례 제8조(공익제보의 접수 등)에 따라 신고 할 수 있으며, 법 제65조(협조자 보호), 제66조(책임의 감면 등), 서울특별시 부조리 신고 및 보상금 지급에 관한 조례 제5조(신고자의 보호), 서울특별시 공익제보 보호 및 지원에 관한 조례 제9조(공익제보자의 보호 등)에는 신고자 보호, 책임감면, 신분보장 등 규정이 있어 면밀한 검토를 통하여 조치를 받으실 수 있습니다.<br>
+															누구든지 시와 관계된 내용에 대하여 서울시에 신고할 수 있으며 공직자는 직무를 행함에 있어 다른 공직자가 부패행위를 한 사실을 알게 되었거나 부패행위를 강요 또는 제의 받은 경우에는 지체없이 수사기관, 감사원 또는 서울시에 신고할 수 있습니다.<br>
+															위 법에 의한 신고를 함으로써 그와 관련된 자신의 범죄가 발견된 경우 그 신고자에 대하여 형을 감경 또는 면제할 수 있습니다.<br>
+															이에 따라 부패행위에 관련된 자(부패 행위자, 동조 또는 연루된 자 등)도 신고할 수 있습니다.
+														</p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- // accodian -->
+								</div>
+							</div>
+						</div>
+						<!-- // toggle_vitem_wrap -->
+					</div>
+				</div>
+				<!-- 공익제보 안심변호사 안내 팝업 -->
+				<div class="dimlayer_z fulltype" id="lawyer_guide_pop" data-closefocus="#btn_lawyer_guide_call">
+					<div class="fullpop_dim"></div>
+					<div class="fullpop_item">
+						<div class="fullpop_titlow">
+							<h4 class="fullpop_title">공익제보 안심변호사 안내<span class="fullpop_tsub">(상담 및 대리신고)</span></h4>
+						</div>
+						<div class="fullpop_contlow" tabindex="0">
+							<div class="fullpop_contlow_in">
+								<div class="only_text_sigbox">
+									<p class="only_sigmain_para">서울특별시 공익제보 <strong class="b_emp">안심변호사</strong> 제도 안내</p>
+									<p class="only_sigsub_para">내부의 비리 등을 목격하였지만 향후 불이익이 두려워 망설이셨다면 <br class="pc_br">서울시 안심변호사를 통해 대리신고 하세요.</p>
+								</div>
+								<div class="bullet_vitem_w">
+									<div class="bullet_vitem">
+										<p class="bullet_vtit">운영 목적</p>
+										<div class="bullect_vcont">
+											<p class="bvc_norpara">시 소관 공익제보 관련 법률상담과 신분 노출을 막기 위한 대리신고 공익제보자, 특히 내부 고발자에 대한 보호 및 지원</p>
+										</div>
+									</div>
+									<div class="bullet_vitem">
+										<p class="bullet_vtit">적용범위</p>
+										<div class="bullect_vcont">
+											<p class="bvc_norpara">시 소관 공익제보에 해당하는 경우 법률상담 가능, 내부고발에 해당하는 경우 대리신고 수행</p>
+											<div class="bvc_flist_box">
+												<span class="bvc_flab">시 소관 사무</span>
+												<div class="bvc_flist_w">
+													<ul class="bvc_flist">
+														<li>시 및 그 소속 행정기관</li>
+														<li>자치구(시의 위임사무에 한함)</li>
+														<li>시 산하 투자, 출자출연기관</li>
+														<li>시의 사무위탁기관(시의 위탁사무에 한함)</li>
+													</ul>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="bullet_vitem">
+										<p class="bullet_vtit">공익제보 법률상담 및 대리신고 신청 방법</p>
+										<div class="bullect_vcont">
+											<ul class="svdot_vlist dtype2">
+												<li>서울특별시 공익제보 안심변호사 메일로 상담 신청</li>
+												<li><strong class="svdot_intit">운영절차</strong><br>안심변호사와 이메일로 <span class="c_emp">상담신청 > 변호사 상담 > 서울시 공익제보 조사부서</span>에 <span class="c_emp">변호사 대리신고(변호사 이름으로 신고) > 조사결과</span>를 변호사에게 통보 → 변호사가 결과를 제보자에게 안내</li>
+												<li>기타문의는 공익제보지원센터 메일(watchdog@seoul.go.kr)</li>
+												<li>중복상담을 피하기 위해 제보 건에 대해서는 1명의 안심변호사를 선택하시어 상담요청을 하시기 바랍니다.</li>
+											</ul>
+										</div>
+									</div>
+									<div class="bullet_vitem">
+										<p class="bullet_vtit">접수민원 상세정보</p>
+										<div class="bullect_vcont">
+											<div class="data_tb_scr_w">
+												<table class="data_tb sztype2">
+													<caption>접수민원 상세정보표</caption>
+													<colgroup>
+														<col style="width:15%" />
+														<col style="width:13%" />
+														<col style="width:13%" />
+														<col />
+														<col style="width:25%" />
+													</colgroup>
+													<thead>
+														<tr>
+															<th class="bgtype2" scope="col">연번</th>
+															<th scope="col">분야</th>
+															<th scope="col">성명</th>
+															<th scope="col">소속</th>
+															<th scope="col">이메일</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td class="bgtype2"><span class="tb_intext ftype2">1</span></td>
+															<td rowspan="4"><span class="tb_intext">반부패</span></td>
+															<td><span class="tb_intext">이상대</span></td>
+															<td class="align_left">
+																<span class="tb_intext">
+																	(현)법률사무소 삼정<br>
+																	(전)흥사단 투명사회운동본부 운영위원
+																</span>
+															</td>
+															<td class="align_left"><span class="tb_intext">xing1@nate.com</span></td>
+														</tr>
+														<tr>
+															<td class="bgtype2"><span class="tb_intext ftype2">2</span></td>
+															<td><span class="tb_intext">박병언</span></td>
+															<td class="align_left">
+																<span class="tb_intext">
+																	(현)법무법인 위공<br>
+																	(현)서울시 환경분쟁조정위원회 위원<br>
+																	(현)KORAIL 안심신고 변호사
+																</span>
+															</td>
+															<td class="align_left"><span class="tb_intext">pbe1894@gmail.com</span></td>
+														</tr>
+														<tr>
+															<td class="bgtype2"><span class="tb_intext ftype2">3</span></td>
+															<td><span class="tb_intext">최재홍</span></td>
+															<td class="align_left">
+																<span class="tb_intext">
+																	(현)법무법인 자연<br>
+																	(현)녹색법률센터 운영위원<br>
+																	(현)호루라기재단 법률지원단
+																</span>
+															</td>
+															<td class="align_left"><span class="tb_intext">jaebong75@naver.com</span></td>
+														</tr>
+														<tr>
+															<td class="bgtype2"><span class="tb_intext ftype2">4</span></td>
+															<td><span class="tb_intext">황영민</span></td>
+															<td class="align_left">
+																<span class="tb_intext">
+																	(현)법무법인 이공<br>
+																	(현)서울시 시민참여옴부즈만<br>
+																	(현)서울에너지공사 투자심의위원
+																</span>
+															</td>
+															<td class="align_left"><span class="tb_intext">iammin2013@daum.net</span></td>
+														</tr>
+														<tr>
+															<td class="bgtype2"><span class="tb_intext ftype2">5</span></td>
+															<td><span class="tb_intext">반부패/여성</span></td>
+															<td><span class="tb_intext">소제인</span></td>
+															<td class="align_left">
+																<span class="tb_intext">
+																	(현)법무법인 세한<br>
+																	(현)재한몽골학교 법률자문 변호사<br>
+																	(현)몽골 울란바타르 문화진흥원 이사
+																</span>
+															</td>
+															<td class="align_left"><span class="tb_intext">jiso@sehanlaw.com</span></td>
+														</tr>
+														<tr>
+															<td class="bgtype2"><span class="tb_intext ftype2">6</span></td>
+															<td><span class="tb_intext">여성/아동</span></td>
+															<td><span class="tb_intext">김희경</span></td>
+															<td class="align_left">
+																<span class="tb_intext">
+																	(현)법무법인 도영<br>
+																	(현)서울YMCA 시민중계실 위원<br>
+																	(전)서울가정법원 화해권고 위원
+																</span>
+															</td>
+															<td class="align_left"><span class="tb_intext">mediatorkim@gmail.com</span></td>
+														</tr>
+														<tr>
+															<td class="bgtype2"><span class="tb_intext ftype2">7</span></td>
+															<td><span class="tb_intext">환경</span></td>
+															<td><span class="tb_intext">정남순</span></td>
+															<td class="align_left">
+																<span class="tb_intext">
+																	서울환경 연합 추천 변호사<br>
+																	(현)환경법률센터 부소장(상근)
+																</span>
+															</td>
+															<td class="align_left"><span class="tb_intext">jns@kfem.or.kr</span></td>
+														</tr>
+														<tr>
+															<td class="bgtype2"><span class="tb_intext ftype2">8</span></td>
+															<td><span class="tb_intext">소비자</span></td>
+															<td><span class="tb_intext">박승수</span></td>
+															<td class="align_left">
+																<span class="tb_intext">
+																	(현)법무법인 한강<br>
+																	(전)법무법인 삼현
+																</span>
+															</td>
+															<td class="align_left"><span class="tb_intext">davidhangang@nate.com</span></td>
+														</tr>
+														<tr>
+															<td class="bgtype2"><span class="tb_intext ftype2">9</span></td>
+															<td><span class="tb_intext">복지</span></td>
+															<td><span class="tb_intext">곽리찬</span></td>
+															<td class="align_left">
+																<span class="tb_intext">
+																	(현)리차드 법률사무소<br>
+																	(현)서울남부지방법원 국선전담변호사<br>
+																	(전)정부법무공단 변호사
+																</span>
+															</td>
+															<td class="align_left"><span class="tb_intext">richardlaw@naver.com</span></td>
+														</tr>
+														<tr>
+															<td class="bgtype2"><span class="tb_intext ftype2">10</span></td>
+															<td><span class="tb_intext">인권</span></td>
+															<td><span class="tb_intext">좌세준</span></td>
+															<td class="align_left">
+																<span class="tb_intext">
+																	(현)법무법인 한맥<br>
+																	(현)한양대 법과대학 겸임교수<br>
+																	(현)천주교인권위원회 상임이사
+																</span>
+															</td>
+															<td class="align_left"><span class="tb_intext">jleft@hanmail.net</span></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+											<p class="important_text c_emp mt10">항의/호소/주장/청원/의견 등의 일반민원 및 시 소관 사무가 아닌 경우는 법률상담 및 대리신고 대상에서 제외</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<button type="button" class="btn_layerclose" title="공익제보 안심변호사 안내 팝업 닫기"></button>
+					</div>
+				</div>
+				<!-- // 공익제보 안심변호사 안내 팝업 -->
+				<script>
+					mobileMenuRock("#mbgnb01_05");
+					$(function() {
+						// 안심변호사 layer 호출
+						$("#btn_lawyer_call_01").on("click", function() {
+							dimLayerShow({
+								"target": "#lawyer_guide_pop"
+							}); // show
+							// dimLayerHide({"target" : "#lawyer_guide_pop"}); // hide
+
+							$("#lawyer_guide_pop").attr("data-closefocus", "#btn_lawyer_call_01");
+						});
+						// 안심변호사 layer 호출
+						$("#btn_lawyer_call_02").on("click", function() {
+							dimLayerShow({
+								"target": "#lawyer_guide_pop"
+							}); // show
+							// dimLayerHide({"target" : "#lawyer_guide_pop"}); // hide
+
+							$("#lawyer_guide_pop").attr("data-closefocus", "#btn_lawyer_call_02");
+						});
+						// tab
+						subContentsTabFunc("#contents_hlist", "#contents_group");
+						// toggle
+						toggleUI();
+						// accodian
+						accodianFunc();
+					});
+				</script>
+			</div>
+		</section>
+
+		<!-- footer_wrap 220724 수정 -->
+		<footer class="footer_wrap">
+			<div class="footer_inner">
+				<div class="ftg_hitem_fzone">
+					<div class="ftv_hitem_fxwrap">
+						<div class="ftv_hitem"><a href="#" class="ftv_hitem_link" title="민원편람 바로가기">민원편람</a></div>
+						<div class="ftv_hitem"><a href="#" class="ftv_hitem_link" title="무인민원발급기 위치 바로가기">무인민원발급기 위치</a></div>
+						<div class="ftv_hitem"><a href="#" class="ftv_hitem_link" title="온라인 민원발급 바로가기">온라인 민원발급</a></div>
+						<div class="ftv_hitem"><a href="#" class="ftv_hitem_link" title="민원 안내관 바로가기">민원 안내관</a></div>
+						<div class="ftv_hitem"><a href="#" class="ftv_hitem_link" title="응답소 민원 통계 바로가기">응답소 민원 통계</a></div>
+						<div class="ftv_hitem"><a href="#" class="ftv_hitem_link" title="민원공개사례 바로가기">민원공개사례</a></div>
+					</div>
+				</div>
+				<div class="ftv_banner_wrap">
+					<script>
+						$(function() {
+							// footer random
+							var random_data = [{
+									src: "./images/temp/banner_footer_pc.png",
+									alt: "[개발연동]대체텍스트01"
+								},
+								{
+									src: "./images/temp/banner_footer_pc_02.png",
+									alt: "[개발연동]대체텍스트02"
+								},
+								{
+									src: "./images/temp/banner_footer_pc_03.png",
+									alt: "[개발연동]대체텍스트03"
+								},
+								{
+									src: "./images/temp/banner_footer_pc_04.png",
+									alt: "[개발연동]대체텍스트04"
+								},
+								{
+									src: "./images/temp/banner_footer_pc_05.png",
+									alt: "[개발연동]대체텍스트05"
+								}
+							]
+							var randomNumber = Math.floor(Math.random() * random_data.length);
+							$("#randomBanner").append("<img src='" + random_data[randomNumber].src + "' alt='" + random_data[randomNumber].alt + "' />")
+						});
+					</script>
+					<a href="#" class="ftv_banner" id="randomBanner"></a>
+				</div>
+				<div class="ftvitem_fxwrap">
+					<div class="ftvitem_left">
+						<ul class="ftsns_hlist">
+							<li><a href="https://www.facebook.com/seoul.kr" title="서울시 페이스북 새창열기" class="ftsns ftsns01" target="_blank"><span class="hdtext">facebook</span></a></li>
+							<li><a href="https://twitter.com/seoulmania" title="서울시 트위터 새창열기" class="ftsns ftsns02" target="_blank"><span class="hdtext">twitter</span></a></li>
+							<li><a href="http://blog.naver.com/haechiseoul/" title="서울시 블로그 새창열기" class="ftsns ftsns03" target="_blank"><span class="hdtext">blog</span></a></li>
+							<li><a href="http://instagram.com/seoul_official" title="인스타그램 새창열기" class="ftsns ftsns04" target="_blank"><span class="hdtext">Instagram</span></a></li>
+							<li><a href="http://tv.seoul.go.kr" title="라이브 서울 새창열기" class="ftsns ftsns05" target="_blank"><span class="hdtext">라이브서울</span></a></li>
+						</ul>
+					</div>
+					<div class="ftvitem_right">
+						<div class="related_area">
+							<select title="유관사이트 선택" class="friend_site" id="friend_site">
+								<option value="" selected="selected">유관사이트 바로가기</option>
+								<option value="http://democracy.seoul.go.kr/front/index.do">민주주의서울</option>
+								<option value="https://120dasan.or.kr/dsnc/main/main.do">120다산콜재단</option>
+								<option value="http://seoulcitizenshall.kr">서울 시민청</option>
+								<option value="http://mediahub.seoul.go.kr/">내손안에 서울</option>
+								<option value="https://www.epeople.go.kr">국민신문고</option>
+							</select>
+							<a href="javascript:;" title="사이트 바로가기(새창열기)" class="btn_related_go">GO</a>
+						</div>
+					</div>
+				</div>
+				<div class="footer_main_wrap">
+					<div class="ftv_bot_wrap">
+						<div class="fbot_logo_cell"><span class="fbot_logo"><span class="hdtext">I&middot;SEOUL&middot;U 너와 나의 서울</span></span></div>
+						<div class="fcopy_cell">
+							<!-- pc menu -->
+							<ul class="ftmenu_hlist">
+								<li><a href="#" class="ftmenu">응답소란?</a></li>
+								<li><a href="#" class="ftmenu type2">개인정보처리방침</a></li>
+								<li><a href="#" class="ftmenu">홈페이지 바로잡기</a></li>
+								<li><a href="#" class="ftmenu">사이트맵</a></li>
+							</ul>
+							<!-- // pc menu -->
+							<div class="ftcopy_w">
+								<p class="ftcopy">서울특별시청 (04524) 서울특별시 중구 세종대로 110</p>
+								<ul class="ftcopy_fxwrap">
+									<li>문의 : 02)120</li>
+									<li>응답소 홈페이지 이용방법 문의 : 시민봉사담당관 02)2133-7935</li>
+								</ul>
+								<p class="ftcopy_sub">© Seoul Metropolitan Government. All rights reserved.</p>
+							</div>
+						</div>
+						<div class="fsub_else_cell">
+							<a href="#" target="_blank" title="새창" class="foot_ismsp"><span class="hdtext">정보보호 및 개인정보보호 관리치계 인증 ISMS*P Personal information &amp; Information Security Management System</span></a>
+							<a href="#" target="_blank" title="새창" class="foot_webacc"><span class="hdtext">과학기술정보통신부 WA WEB ACCESSIBILITY (사)한국시각장애인협회 한국웹접근성평가센터</span></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<!-- // footer_wrap 220724 수정 -->
+	</div>
+</body>
+
+</html>
