@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>벼룩시장 구인구직 스마트 검색 필터</title>
+  <link rel="stylesheet" href="css/search.css">
+</head>
+<body>
+
+  <div class="preview-header">
+    <h1>
+      벼룩시장 스마트 채용 검색
+      <span class="badge">실시간 필터 연동</span>
+    </h1>
+  </div>
+
+  <div class="filter-card is-collapsed" id="filter-card">
+    <header class="filter-top-bar">
+      <div class="tabs-container">
+        <button type="button" class="tab-item" id="tab-region" data-view="region">
+          지역 <span class="tab-count" id="count-region-tab">0/5</span>
+          <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+
+        <button type="button" class="tab-item" id="tab-job" data-view="job">
+          업직종 <span class="tab-count" id="count-job-tab">0/5</span>
+          <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+
+        <button type="button" class="tab-item" id="tab-time" data-view="time">
+          시간별 <span class="tab-count" id="count-time-tab">0/5</span>
+          <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+      </div>
+
+      <div class="keyword-search-box">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="M21 21l-4.35-4.35"></path>
+        </svg>
+        <input type="text" id="top-keyword-input" placeholder="키워드 검색">
+        <button type="button" class="btn-keyword-apply" id="btn-apply-keyword">적용</button>
+      </div>
+
+      <div class="detail-btn-wrap">
+        <button type="button" class="btn-detail-toggle" id="btn-detail-toggle">
+          <span id="detail-btn-text">상세조건</span>
+          <span id="detail-btn-icon">+</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="filter-body" id="filter-body">
+      
+      <!-- 1. 지역 -->
+      <section class="view-region" id="view-region">
+        <div class="inner-search-bar">
+          <input type="text" id="region-search-input" placeholder="지역명을 입력해주세요">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="M21 21l-4.35-4.35"></path>
+          </svg>
+        </div>
+
+        <div class="region-grid">
+          <div class="col-scroll" id="region-depth1-list"></div>
+          <div class="col-scroll" id="region-depth2-list"></div>
+          <div class="col-scroll">
+            <div class="dong-checkbox-grid" id="region-depth3-checkboxes"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. 업직종 -->
+      <section class="view-job" id="view-job">
+        <div class="inner-search-bar">
+          <input type="text" id="job-search-input" placeholder="업직종을 입력해주세요">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="M21 21l-4.35-4.35"></path>
+          </svg>
+        </div>
+
+        <div class="job-grid">
+          <div class="col-scroll" id="job-depth1-list"></div>
+          <div class="col-scroll">
+            <div class="subjob-checkbox-grid" id="job-depth2-checkboxes"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. 시간별 -->
+      <section class="view-time" id="view-time">
+        <table class="condition-table">
+          <tbody>
+            <tr>
+              <th>근무시간</th>
+              <td>
+                <div class="time-options-wrap">
+                  <div class="time-row-items">
+                    <label class="custom-check"><input type="checkbox" name="workTime" value="정규(09~18시)"> 정규(09~18시)</label>
+                    <label class="custom-check"><input type="checkbox" name="workTime" value="오전(06~12시)"> 오전(06~12시)</label>
+                    <label class="custom-check"><input type="checkbox" name="workTime" value="오후(12~18시)"> 오후(12~18시)</label>
+                    <label class="custom-check"><input type="checkbox" name="workTime" value="저녁(18~24시)"> 저녁(18~24시)</label>
+                    <label class="custom-check"><input type="checkbox" name="workTime" value="새벽(00~06시)"> 새벽(00~06시)</label>
+                    <label class="custom-check"><input type="checkbox" name="workTime" value="직접선택" id="chk-time-custom"> 직접선택</label>
+                    <div class="time-select-group">
+                      <select class="time-dropdown" id="sel-time-start">
+                        <option value="">시작시간</option>
+                        <option value="09:00">09:00</option>
+                        <option value="10:00">10:00</option>
+                        <option value="13:00">13:00</option>
+                      </select>
+                      <span style="color: #8c96a3;">~</span>
+                      <select class="time-dropdown" id="sel-time-end">
+                        <option value="">종료시간</option>
+                        <option value="18:00">18:00</option>
+                        <option value="20:00">20:00</option>
+                        <option value="22:00">22:00</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="time-row-items">
+                    <label class="custom-check"><input type="checkbox" name="workTimeOption" value="협의 포함"> 협의 포함</label>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th>근무요일</th>
+              <td>
+                <div class="time-row-items">
+                  <label class="custom-radio"><input type="radio" name="workDay" value="월~금"> 월~금</label>
+                  <label class="custom-radio"><input type="radio" name="workDay" value="월~토"> 월~토</label>
+                  <label class="custom-radio"><input type="radio" name="workDay" value="주말(토, 일)"> 주말(토, 일)</label>
+                  <label class="custom-radio"><input type="radio" name="workDay" value="주 5일"> 주 5일</label>
+                  <label class="custom-radio"><input type="radio" name="workDay" value="주 6일"> 주 6일</label>
+                  <label class="custom-radio"><input type="radio" name="workDay" value="요일협의"> 요일협의</label>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th>근무기간</th>
+              <td>
+                <div class="time-row-items">
+                  <label class="custom-check"><input type="checkbox" name="workPeriod" value="1일"> 1일</label>
+                  <label class="custom-check"><input type="checkbox" name="workPeriod" value="1주 이하"> 1주 이하</label>
+                  <label class="custom-check"><input type="checkbox" name="workPeriod" value="1주일~1개월"> 1주일~1개월</label>
+                  <label class="custom-check"><input type="checkbox" name="workPeriod" value="1~3개월"> 1~3개월</label>
+                  <label class="custom-check"><input type="checkbox" name="workPeriod" value="3~6개월"> 3~6개월</label>
+                  <label class="custom-check"><input type="checkbox" name="workPeriod" value="6개월~1년"> 6개월~1년</label>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- 4. 상세조건 -->
+      <section class="view-detail" id="view-detail">
+        <table class="condition-table">
+          <tbody>
+            <tr>
+              <th>근무형태</th>
+              <td>
+                <div class="time-row-items">
+                  <label class="custom-check"><input type="checkbox" name="jobForm" value="정규직"> 정규직</label>
+                  <label class="custom-check"><input type="checkbox" name="jobForm" value="계약직"> 계약직</label>
+                  <label class="custom-check"><input type="checkbox" name="jobForm" value="파견직"> 파견직</label>
+                  <label class="custom-check"><input type="checkbox" name="jobForm" value="아르바이트"> 아르바이트</label>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th>급여</th>
+              <td>
+                <div class="time-row-items">
+                  <label class="custom-radio"><input type="radio" name="payType" value="시급"> 시급</label>
+                  <label class="custom-radio"><input type="radio" name="payType" value="일급"> 일급</label>
+                  <label class="custom-radio"><input type="radio" name="payType" value="월급"> 월급</label>
+                  <label class="custom-radio"><input type="radio" name="payType" value="회사내규"> 회사내규</label>
+                  <input type="text" class="pay-input-box" placeholder="원 이상" id="input-pay-amount" disabled>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th>복리후생</th>
+              <td>
+                <div class="pill-condition-row">
+                  <button type="button" class="btn-pill-dark" id="btn-open-benefits">복리후생 +</button>
+                  <div class="condition-result-tags" id="benefits-tags-container"></div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+    </main>
+
+    <footer class="filter-footer" id="filter-footer">
+      <div class="tags-container" id="selected-tags-container"></div>
+
+      <div class="footer-actions">
+        <button type="button" class="btn-reset" id="btn-reset-all">
+          초기화
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M23 4v6h-6"></path>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+          </svg>
+        </button>
+        <button type="button" class="btn-search" id="btn-submit-search">검색</button>
+      </div>
+    </footer>
+  </div>
+
+  <!-- 복리후생 모달 -->
+  <div class="modal-overlay" id="option-modal-overlay">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h3 id="modal-title">복리후생 선택</h3>
+        <button type="button" class="btn-modal-close" id="btn-modal-close" style="background:none; border:none; font-size:18px; cursor:pointer;">✕</button>
+      </div>
+      <div class="modal-item-grid" id="modal-items-container"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn-modal-confirm" id="btn-modal-confirm">확인</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-msg" id="toast-msg"></div>
+
+  <script src="js/search.js"></script>
+</body>
+</html>
