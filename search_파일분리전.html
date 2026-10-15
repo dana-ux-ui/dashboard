@@ -1,0 +1,1748 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>벼룩시장 구인구직 스마트 검색 필터</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background-color: #f4f6f9;
+      color: #333333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 16px 80px;
+    }
+
+    .preview-header {
+      width: 100%;
+      max-width: 1120px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .preview-header h1 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1e293b;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .preview-header .badge {
+      font-size: 11px;
+      background: #e0edff;
+      color: #1877f2;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+
+    .filter-card {
+      width: 100%;
+      max-width: 1120px;
+      background: #ffffff;
+      border: 1.5px solid #1877f2;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(24, 119, 242, 0.08);
+      position: relative;
+      transition: border 0.15s ease, box-shadow 0.15s ease, border-radius 0.15s ease;
+    }
+
+    .filter-card.is-collapsed {
+      border: 1px solid #d0d7e2;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .filter-card.is-collapsed .filter-top-bar {
+      border-bottom: none;
+      border-radius: 8px;
+    }
+
+    .filter-card.is-collapsed .tab-item:first-child {
+      border-radius: 7px 0 0 7px;
+    }
+
+    .filter-card.is-collapsed .detail-btn-wrap,
+    .filter-card.is-collapsed .btn-detail-toggle {
+      border-radius: 0 7px 7px 0;
+    }
+
+    .filter-card.is-collapsed .filter-body,
+    .filter-card.is-collapsed .filter-footer {
+      display: none !important;
+    }
+
+    .filter-top-bar {
+      display: flex;
+      align-items: stretch;
+      height: 52px;
+      background: #ffffff;
+      border-radius: 10.5px 10.5px 0 0;
+      position: relative;
+      border-bottom: 1.5px solid #1877f2;
+    }
+
+    .tabs-container {
+      display: flex;
+      align-items: stretch;
+      flex-shrink: 0;
+    }
+
+    .tab-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 24px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #333333;
+      background: #ffffff;
+      border: none;
+      border-right: 1px solid #eef2f6;
+      cursor: pointer;
+      position: relative;
+      transition: color 0.15s ease, background-color 0.15s ease;
+      user-select: none;
+    }
+
+    .tab-item .tab-count {
+      color: #8c96a3;
+      font-size: 14px;
+      font-weight: 400;
+    }
+
+    .tab-item svg.arrow-icon {
+      width: 14px;
+      height: 14px;
+      stroke: #333333;
+      stroke-width: 2.2;
+      fill: none;
+      transition: transform 0.2s ease, stroke 0.2s ease;
+    }
+
+    .tab-item.active {
+      color: #1877f2;
+      font-weight: 700;
+      margin: -1.5px 0 -1.5px -1.5px;
+      border: 1.5px solid #1877f2;
+      border-bottom: 2px solid #ffffff;
+      border-radius: 10px 10px 0 0;
+      background: #ffffff;
+      z-index: 3;
+    }
+
+    .tab-item.active .tab-count {
+      color: #8c96a3;
+    }
+
+    .tab-item.active svg.arrow-icon {
+      stroke: #1877f2;
+      transform: rotate(180deg);
+    }
+
+    .keyword-search-box {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      background: #ffffff;
+      border-right: 1px solid #eef2f6;
+      position: relative;
+    }
+
+    .keyword-search-box svg.search-icon {
+      width: 18px;
+      height: 18px;
+      color: #4e5968;
+      margin-right: 10px;
+      flex-shrink: 0;
+    }
+
+    .keyword-search-box input {
+      flex: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-size: 14px;
+      color: #222222;
+    }
+
+    .keyword-search-box input::placeholder {
+      color: #8c96a3;
+    }
+
+    .btn-keyword-apply {
+      border: none;
+      background: transparent;
+      color: #1877f2;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 6px 12px;
+      border-radius: 4px;
+      transition: background-color 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .btn-keyword-apply:hover {
+      background-color: #f0f6ff;
+    }
+
+    .detail-btn-wrap {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+      background: #ffffff;
+      border-radius: 0 10.5px 0 0;
+    }
+
+    .btn-detail-toggle {
+      height: 100%;
+      border: none;
+      background: transparent;
+      font-size: 14px;
+      font-weight: 500;
+      color: #333333;
+      padding: 0 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+      border-radius: 0 10.5px 0 0;
+    }
+
+    .btn-detail-toggle:hover {
+      background-color: #f8fafc;
+    }
+
+    .btn-detail-toggle.active {
+      background: #1877f2;
+      color: #ffffff;
+      font-weight: 600;
+      margin: -1.5px -1.5px -1.5px 0;
+      border-radius: 0 10.5px 0 0;
+    }
+
+    .filter-body {
+      background: #ffffff;
+      padding: 16px 20px 20px;
+      min-height: 295px;
+    }
+
+    .inner-search-bar {
+      position: relative;
+      margin-bottom: 14px;
+    }
+
+    .inner-search-bar input {
+      width: 100%;
+      height: 40px;
+      background: #f4f6fa;
+      border: 1px solid #eef2f6;
+      border-radius: 8px;
+      padding: 0 40px 0 16px;
+      font-size: 13.5px;
+      color: #333333;
+      outline: none;
+      transition: border-color 0.15s ease, background 0.15s ease;
+    }
+
+    .inner-search-bar input:focus {
+      background: #ffffff;
+      border-color: #1877f2;
+    }
+
+    .inner-search-bar input::placeholder {
+      color: #8c96a3;
+    }
+
+    .inner-search-bar svg {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 17px;
+      height: 17px;
+      color: #8c96a3;
+      pointer-events: none;
+    }
+
+    .custom-check, .custom-radio {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13.5px;
+      color: #333d4b;
+      cursor: pointer;
+      user-select: none;
+      line-height: 1.3;
+    }
+
+    .custom-check input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 17px;
+      height: 17px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 4px;
+      background-color: #ffffff;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      flex-shrink: 0;
+      transition: all 0.12s ease;
+    }
+
+    .custom-check input[type="checkbox"]:hover {
+      border-color: #94a3b8;
+    }
+
+    .custom-check input[type="checkbox"]:checked {
+      background-color: #1877f2;
+      border-color: #1877f2;
+    }
+
+    .custom-check input[type="checkbox"]:checked::after {
+      content: "";
+      position: absolute;
+      width: 4px;
+      height: 8px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg) translate(-0.5px, -1px);
+    }
+
+    .region-grid {
+      display: grid;
+      grid-template-columns: 240px 240px 1fr;
+      height: 230px;
+      border-top: 1px solid #f1f4f8;
+    }
+
+    .col-scroll {
+      overflow-y: auto;
+      padding: 10px 12px 10px 0;
+    }
+
+    .col-scroll:not(:last-child) {
+      border-right: 1px solid #edf0f4;
+      padding-right: 16px;
+      margin-right: 16px;
+    }
+
+    .col-scroll::-webkit-scrollbar {
+      width: 5px;
+    }
+    .col-scroll::-webkit-scrollbar-thumb {
+      background: #e2e8f0;
+      border-radius: 4px;
+    }
+
+    .empty-guide-box {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #94a3b8;
+      font-size: 13.5px;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .nav-item-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      height: 38px;
+      padding: 0 12px;
+      border-radius: 6px;
+      font-size: 14px;
+      color: #333d4b;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.12s ease;
+      background: transparent;
+      border: none;
+      text-align: left;
+    }
+
+    .nav-item-btn:hover {
+      background: #f8fafc;
+    }
+
+    .nav-item-btn.selected {
+      background: #edf5ff;
+      color: #1877f2;
+      font-weight: 700;
+    }
+
+    .nav-item-btn.checked {
+      color: #1877f2;
+      font-weight: 600;
+    }
+
+    .nav-item-btn svg.arrow-right {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+      stroke-width: 2.2;
+      fill: none;
+    }
+
+    .nav-item-btn svg.check-icon {
+      width: 15px;
+      height: 15px;
+      stroke: #1877f2;
+      stroke-width: 2.4;
+      fill: none;
+    }
+
+    .dong-checkbox-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px 12px;
+      padding: 12px 0 12px 6px;
+    }
+
+    .job-grid {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      height: 230px;
+      border-top: 1px solid #f1f4f8;
+    }
+
+    .subjob-checkbox-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px 12px;
+      padding: 10px 0 10px 24px;
+      align-content: start;
+    }
+
+    .view-time, .view-detail {
+      display: none;
+      padding-top: 4px;
+    }
+
+    .condition-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .condition-table tr {
+      border-bottom: 1px solid #edf0f5;
+    }
+
+    .condition-table tr:last-child {
+      border-bottom: none;
+    }
+
+    .condition-table th {
+      width: 100px;
+      text-align: left;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #1e293b;
+      padding: 18px 0;
+      vertical-align: middle;
+    }
+
+    .condition-table td {
+      padding: 14px 0;
+      font-size: 13.5px;
+    }
+
+    .time-options-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .time-row-items {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 18px;
+    }
+
+    .time-select-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-left: 6px;
+    }
+
+    .time-dropdown, .detail-select-box {
+      height: 36px;
+      padding: 0 28px 0 12px;
+      border: 1px solid #edf2f7;
+      background: #f7f9fa url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="%238c96a3" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>') no-repeat calc(100% - 10px) center;
+      border-radius: 6px;
+      font-size: 13px;
+      color: #333333;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+    }
+
+    .pay-input-box {
+      height: 36px;
+      width: 150px;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      padding: 0 12px;
+      font-size: 13px;
+      text-align: right;
+      color: #1e293b;
+      outline: none;
+      margin-left: 14px;
+    }
+
+    .pay-input-box:disabled {
+      background-color: #f1f5f9;
+      border-color: #e2e8f0;
+      color: #94a3b8;
+      cursor: not-allowed;
+    }
+
+    .pill-condition-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-pill-dark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 36px;
+      padding: 0 16px;
+      background-color: #656d78;
+      color: #ffffff;
+      font-size: 13.5px;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .condition-result-tags {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .chip-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 34px;
+      padding: 0 12px;
+      background: #ffffff;
+      border: 1px solid #d0d7e2;
+      border-radius: 20px;
+      font-size: 13px;
+      color: #334155;
+    }
+
+    .chip-item .btn-remove-chip {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: #8c96a3;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .chip-item .btn-remove-chip:hover {
+      color: #ef4444;
+    }
+
+    /* 하단 푸터 */
+    .filter-footer {
+      border-top: 1px solid #edf0f5;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: #ffffff;
+      border-radius: 0 0 10.5px 10.5px;
+    }
+
+    .tags-container {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+      min-height: 42px;
+    }
+
+    .tag-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      user-select: none;
+    }
+
+    .tag-badge.tag-region {
+      background-color: #edf5ff;
+      border: 1px solid #c9dffd;
+      color: #1877f2;
+    }
+
+    .tag-badge.tag-job {
+      background-color: #fff9db;
+      border: 1px solid #f9e38e;
+      color: #8c6b00;
+    }
+
+    .tag-badge.tag-time {
+      background-color: #f3eeff;
+      border: 1px solid #dccefc;
+      color: #6d35dc;
+    }
+
+    .tag-badge.tag-keyword {
+      background-color: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: #166534;
+    }
+
+    .tag-badge .btn-remove-tag {
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 700;
+      border: none;
+      background: transparent;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: inherit;
+    }
+
+    .footer-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .btn-reset {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 42px;
+      padding: 0 20px;
+      border: 1px solid #dbe0e6;
+      border-radius: 8px;
+      background: #ffffff;
+      color: #4e5968;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .btn-search {
+      height: 42px;
+      padding: 0 36px;
+      border: none;
+      border-radius: 8px;
+      background: #1877f2;
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .toast-msg {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(50px);
+      opacity: 0;
+      background: #1e293b;
+      color: #ffffff;
+      padding: 10px 20px;
+      border-radius: 24px;
+      font-size: 13.5px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      pointer-events: none;
+      transition: all 0.25s ease;
+      z-index: 10000;
+    }
+
+    .toast-msg.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* 팝업 모달 */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(15, 23, 42, 0.45);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .modal-overlay.show {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal-window {
+      background: #ffffff;
+      width: 100%;
+      max-width: 580px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      padding: 24px 28px 28px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 22px;
+    }
+
+    .modal-header h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    .modal-item-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      max-height: 380px;
+      overflow-y: auto;
+    }
+
+    .btn-option-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 36px;
+      padding: 0 16px;
+      background: #ffffff;
+      border: 1px solid #dce2ea;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #475569;
+      cursor: pointer;
+    }
+
+    .btn-option-pill.selected {
+      border: 1.5px solid #1877f2;
+      color: #1877f2;
+      font-weight: 600;
+    }
+
+    .modal-footer {
+      margin-top: 26px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .btn-modal-confirm {
+      width: 220px;
+      height: 44px;
+      background: #1877f2;
+      border: none;
+      border-radius: 8px;
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="preview-header">
+    <h1>
+      벼룩시장 스마트 채용 검색
+      <span class="badge">실시간 필터 연동</span>
+    </h1>
+  </div>
+
+  <div class="filter-card is-collapsed" id="filter-card">
+    <header class="filter-top-bar">
+      <div class="tabs-container">
+        <button type="button" class="tab-item" id="tab-region" data-view="region">
+          지역 <span class="tab-count" id="count-region-tab">0/5</span>
+          <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+
+        <button type="button" class="tab-item" id="tab-job" data-view="job">
+          업직종 <span class="tab-count" id="count-job-tab">0/5</span>
+          <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+
+        <button type="button" class="tab-item" id="tab-time" data-view="time">
+          시간별 <span class="tab-count" id="count-time-tab">0/5</span>
+          <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+      </div>
+
+      <div class="keyword-search-box">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="M21 21l-4.35-4.35"></path>
+        </svg>
+        <input type="text" id="top-keyword-input" placeholder="키워드 검색">
+        <button type="button" class="btn-keyword-apply" id="btn-apply-keyword">적용</button>
+      </div>
+
+      <div class="detail-btn-wrap">
+        <button type="button" class="btn-detail-toggle" id="btn-detail-toggle">
+          <span id="detail-btn-text">상세조건</span>
+          <span id="detail-btn-icon">+</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="filter-body" id="filter-body">
+      
+      <!-- 1. 지역 -->
+      <section class="view-region" id="view-region">
+        <div class="inner-search-bar">
+          <input type="text" id="region-search-input" placeholder="지역명을 입력해주세요">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="M21 21l-4.35-4.35"></path>
+          </svg>
+        </div>
+
+        <div class="region-grid">
+          <div class="col-scroll" id="region-depth1-list"></div>
+          <div class="col-scroll" id="region-depth2-list"></div>
+          <div class="col-scroll">
+            <div class="dong-checkbox-grid" id="region-depth3-checkboxes"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. 업직종 -->
+      <section class="view-job" id="view-job">
+        <div class="inner-search-bar">
+          <input type="text" id="job-search-input" placeholder="업직종을 입력해주세요">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="M21 21l-4.35-4.35"></path>
+          </svg>
+        </div>
+
+        <div class="job-grid">
+          <div class="col-scroll" id="job-depth1-list"></div>
+          <div class="col-scroll">
+            <div class="subjob-checkbox-grid" id="job-depth2-checkboxes"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. 시간별 -->
+      <section class="view-time" id="view-time">
+        <table class="condition-table">
+          <tbody>
+            <tr>
+              <th>근무시간</th>
+              <td>
+                <div class="time-options-wrap">
+                  <div class="time-row-items">
+                    <label class="custom-check"><input type="checkbox" name="workTime" value="정규(09~18시)"> 정규(09~18시)</label>
+                    <label class="custom-check"><input type="checkbox" name="workTime" value="오전(06~12시)"> 오전(06~12시)</label>
+                    <label class="custom-check"><input type="checkbox" name="workTime" value="오후(12~18시)"> 오후(12~18시)</label>
+                    <label class="custom-check"><input type="checkbox" name="workTime" value="저녁(18~24시)"> 저녁(18~24시)</label>
+                    <label class="custom-check"><input type="checkbox" name="workTime" value="새벽(00~06시)"> 새벽(00~06시)</label>
+                    <label class="custom-check"><input type="checkbox" name="workTime" value="직접선택" id="chk-time-custom"> 직접선택</label>
+                    <div class="time-select-group">
+                      <select class="time-dropdown" id="sel-time-start">
+                        <option value="">시작시간</option>
+                        <option value="09:00">09:00</option>
+                        <option value="10:00">10:00</option>
+                        <option value="13:00">13:00</option>
+                      </select>
+                      <span style="color: #8c96a3;">~</span>
+                      <select class="time-dropdown" id="sel-time-end">
+                        <option value="">종료시간</option>
+                        <option value="18:00">18:00</option>
+                        <option value="20:00">20:00</option>
+                        <option value="22:00">22:00</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="time-row-items">
+                    <label class="custom-check"><input type="checkbox" name="workTimeOption" value="협의 포함"> 협의 포함</label>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th>근무요일</th>
+              <td>
+                <div class="time-row-items">
+                  <label class="custom-radio"><input type="radio" name="workDay" value="월~금"> 월~금</label>
+                  <label class="custom-radio"><input type="radio" name="workDay" value="월~토"> 월~토</label>
+                  <label class="custom-radio"><input type="radio" name="workDay" value="주말(토, 일)"> 주말(토, 일)</label>
+                  <label class="custom-radio"><input type="radio" name="workDay" value="주 5일"> 주 5일</label>
+                  <label class="custom-radio"><input type="radio" name="workDay" value="주 6일"> 주 6일</label>
+                  <label class="custom-radio"><input type="radio" name="workDay" value="요일협의"> 요일협의</label>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th>근무기간</th>
+              <td>
+                <div class="time-row-items">
+                  <label class="custom-check"><input type="checkbox" name="workPeriod" value="1일"> 1일</label>
+                  <label class="custom-check"><input type="checkbox" name="workPeriod" value="1주 이하"> 1주 이하</label>
+                  <label class="custom-check"><input type="checkbox" name="workPeriod" value="1주일~1개월"> 1주일~1개월</label>
+                  <label class="custom-check"><input type="checkbox" name="workPeriod" value="1~3개월"> 1~3개월</label>
+                  <label class="custom-check"><input type="checkbox" name="workPeriod" value="3~6개월"> 3~6개월</label>
+                  <label class="custom-check"><input type="checkbox" name="workPeriod" value="6개월~1년"> 6개월~1년</label>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- 4. 상세조건 -->
+      <section class="view-detail" id="view-detail">
+        <table class="condition-table">
+          <tbody>
+            <tr>
+              <th>근무형태</th>
+              <td>
+                <div class="time-row-items">
+                  <label class="custom-check"><input type="checkbox" name="jobForm" value="정규직"> 정규직</label>
+                  <label class="custom-check"><input type="checkbox" name="jobForm" value="계약직"> 계약직</label>
+                  <label class="custom-check"><input type="checkbox" name="jobForm" value="파견직"> 파견직</label>
+                  <label class="custom-check"><input type="checkbox" name="jobForm" value="아르바이트"> 아르바이트</label>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th>급여</th>
+              <td>
+                <div class="time-row-items">
+                  <label class="custom-radio"><input type="radio" name="payType" value="시급"> 시급</label>
+                  <label class="custom-radio"><input type="radio" name="payType" value="일급"> 일급</label>
+                  <label class="custom-radio"><input type="radio" name="payType" value="월급"> 월급</label>
+                  <label class="custom-radio"><input type="radio" name="payType" value="회사내규"> 회사내규</label>
+                  <input type="text" class="pay-input-box" placeholder="원 이상" id="input-pay-amount" disabled>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th>복리후생</th>
+              <td>
+                <div class="pill-condition-row">
+                  <button type="button" class="btn-pill-dark" id="btn-open-benefits">복리후생 +</button>
+                  <div class="condition-result-tags" id="benefits-tags-container"></div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+    </main>
+
+    <footer class="filter-footer" id="filter-footer">
+      <div class="tags-container" id="selected-tags-container"></div>
+
+      <div class="footer-actions">
+        <button type="button" class="btn-reset" id="btn-reset-all">
+          초기화
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M23 4v6h-6"></path>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+          </svg>
+        </button>
+        <button type="button" class="btn-search" id="btn-submit-search">검색</button>
+      </div>
+    </footer>
+  </div>
+
+  <!-- 복리후생 모달 -->
+  <div class="modal-overlay" id="option-modal-overlay">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h3 id="modal-title">복리후생 선택</h3>
+        <button type="button" class="btn-modal-close" id="btn-modal-close" style="background:none; border:none; font-size:18px; cursor:pointer;">✕</button>
+      </div>
+      <div class="modal-item-grid" id="modal-items-container"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn-modal-confirm" id="btn-modal-confirm">확인</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-msg" id="toast-msg"></div>
+
+  <script>
+    /* =========================================================
+       1. 데이터셋 정의
+       ========================================================= */
+    const REGION_DATA = [
+      { id: "seoul", name: "서울", sub: ["서울 전체", "강남구", "서초구", "송파구", "마포구", "영등포구"] },
+      { id: "gyeonggi", name: "경기", sub: ["경기 전체", "수원시", "성남시", "부천시", "화성시", "용인시", "안양시"] },
+      { id: "incheon", name: "인천", sub: ["인천 전체", "강화군", "검단구", "계양구", "남동구"] },
+      { id: "busan", name: "부산", sub: ["부산 전체", "해운대구", "부산진구", "동래구"] },
+      { id: "daegu", name: "대구", sub: ["대구 전체", "수성구", "달서구", "중구"] }
+    ];
+
+    const DONG_DATA_MAP = {
+      "강남구": ["강남구 전체", "역삼동", "개포동", "청담동", "삼성동", "대치동", "신사동", "논현동", "압구정동"],
+      "서초구": ["서초구 전체", "서초동", "잠원동", "반포동", "방배동", "양재동"],
+      "송파구": ["송파구 전체", "잠실동", "신천동", "문정동", "가락동", "방이동"],
+      "마포구": ["마포구 전체", "공덕동", "아현동", "도화동", "망원동", "상암동"],
+      "영등포구": ["영등포구 전체", "여의도동", "당산동", "문래동", "영등포동"],
+      "계양구": ["계양구 전체", "계산동", "계양동", "작전동", "작전서운동", "효성동"],
+      "강화군": ["강화군 전체", "강화읍", "선원면"],
+      "남동구": ["남동구 전체", "구월동", "논현동", "간석동"],
+      "검단구": ["검단구 전체", "당하동", "원당동"]
+    };
+
+    const JOB_DATA = [
+      {
+        id: "food",
+        name: "외식·음료",
+        sub: ["외식·음료 전체", "바리스타", "홀서빙", "주방보조", "조리사", "매장관리"]
+      },
+      {
+        id: "office",
+        name: "사무직",
+        sub: [
+          "사무직 전체", "사무보조", "문서작성·자료조사", "데이터수집·가공",
+          "비서", "경리·회계보조", "기획·인사·총무", "재고·구매·자재관리"
+        ]
+      },
+      {
+        id: "production",
+        name: "생산·건설·노무",
+        sub: ["생산·건설 전체", "제조·조립", "품질검사", "물류·포장", "단순노무", "설비기사"]
+      },
+      {
+        id: "hospital",
+        name: "병원·간호·연구",
+        sub: ["병원·간호 전체", "간호조무사", "치과위생사", "물리치료사", "원무행정"]
+      },
+      {
+        id: "store",
+        name: "매장관리·판매",
+        sub: ["매장관리 전체", "의류판매", "편의점", "마트·슈퍼", "화장품판매"]
+      }
+    ];
+
+    const BENEFITS_ITEMS = [
+      "국민연금", "건강보험", "고용보험", "산재보험", "퇴직금",
+      "야근수당", "휴일수당", "정기보너스", "인센티브제", "연차", "주5일근무"
+    ];
+
+    // 상태 관리
+    const state = {
+      isOpen: false,
+      currentView: null,
+      isDetailOpen: false,
+
+      activeSidoId: 'seoul',
+      activeSigunguName: null,
+      activeJobId: 'food',
+
+      selectedTags: [],
+      selectedBenefits: []
+    };
+
+    let tempSelectedItems = new Set();
+
+    // DOM 캐싱
+    const filterCard = document.getElementById('filter-card');
+    const tabRegion = document.getElementById('tab-region');
+    const tabJob = document.getElementById('tab-job');
+    const tabTime = document.getElementById('tab-time');
+    const btnDetailToggle = document.getElementById('btn-detail-toggle');
+    const detailBtnText = document.getElementById('detail-btn-text');
+    const detailBtnIcon = document.getElementById('detail-btn-icon');
+
+    const viewRegion = document.getElementById('view-region');
+    const viewJob = document.getElementById('view-job');
+    const viewTime = document.getElementById('view-time');
+    const viewDetail = document.getElementById('view-detail');
+
+    const countRegionTab = document.getElementById('count-region-tab');
+    const countJobTab = document.getElementById('count-job-tab');
+    const countTimeTab = document.getElementById('count-time-tab');
+
+    const regionDepth1List = document.getElementById('region-depth1-list');
+    const regionDepth2List = document.getElementById('region-depth2-list');
+    const regionDepth3Checkboxes = document.getElementById('region-depth3-checkboxes');
+
+    const jobDepth1List = document.getElementById('job-depth1-list');
+    const jobDepth2Checkboxes = document.getElementById('job-depth2-checkboxes');
+
+    const selectedTagsContainer = document.getElementById('selected-tags-container');
+    const btnResetAll = document.getElementById('btn-reset-all');
+    const btnSubmitSearch = document.getElementById('btn-submit-search');
+
+    const topKeywordInput = document.getElementById('top-keyword-input');
+    const btnApplyKeyword = document.getElementById('btn-apply-keyword');
+    const toastMsg = document.getElementById('toast-msg');
+
+    const chkTimeCustom = document.getElementById('chk-time-custom');
+    const selTimeStart = document.getElementById('sel-time-start');
+    const selTimeEnd = document.getElementById('sel-time-end');
+    const payTypeRadios = document.querySelectorAll('input[name="payType"]');
+    const payInputAmount = document.getElementById('input-pay-amount');
+
+    const optionModalOverlay = document.getElementById('option-modal-overlay');
+    const modalItemsContainer = document.getElementById('modal-items-container');
+    const btnModalClose = document.getElementById('btn-modal-close');
+    const btnModalConfirm = document.getElementById('btn-modal-confirm');
+    const btnOpenBenefits = document.getElementById('btn-open-benefits');
+    const benefitsTagsContainer = document.getElementById('benefits-tags-container');
+
+    function showToast(message) {
+      toastMsg.textContent = message;
+      toastMsg.classList.add('show');
+      clearTimeout(window._toastTimeout);
+      window._toastTimeout = setTimeout(() => {
+        toastMsg.classList.remove('show');
+      }, 2000);
+    }
+
+    /* =========================================================
+       2. 패널 제어
+       ========================================================= */
+    function toggleView(viewName) {
+      if (state.isOpen && state.currentView === viewName) {
+        closeFilter();
+      } else {
+        openView(viewName);
+      }
+    }
+
+    function closeFilter() {
+      state.isOpen = false;
+      state.currentView = null;
+      state.isDetailOpen = false;
+
+      filterCard.classList.add('is-collapsed');
+      [tabRegion, tabJob, tabTime].forEach(tab => tab.classList.remove('active'));
+      btnDetailToggle.classList.remove('active');
+      detailBtnText.textContent = '상세조건';
+      detailBtnIcon.textContent = '+';
+
+      viewRegion.style.display = 'none';
+      viewJob.style.display = 'none';
+      viewTime.style.display = 'none';
+      viewDetail.style.display = 'none';
+    }
+
+    function openView(viewName) {
+      state.isOpen = true;
+      state.currentView = viewName;
+
+      filterCard.classList.remove('is-collapsed');
+      [tabRegion, tabJob, tabTime].forEach(tab => tab.classList.remove('active'));
+
+      if (viewName === 'detail') {
+        state.isDetailOpen = true;
+        btnDetailToggle.classList.add('active');
+        detailBtnText.textContent = '상세조건';
+        detailBtnIcon.textContent = '✕';
+      } else {
+        state.isDetailOpen = false;
+        btnDetailToggle.classList.remove('active');
+        detailBtnText.textContent = '상세조건';
+        detailBtnIcon.textContent = '+';
+        const targetTab = document.querySelector(`.tab-item[data-view="${viewName}"]`);
+        if (targetTab) targetTab.classList.add('active');
+      }
+
+      viewRegion.style.display = (viewName === 'region') ? 'block' : 'none';
+      viewJob.style.display = (viewName === 'job') ? 'block' : 'none';
+      viewTime.style.display = (viewName === 'time') ? 'block' : 'none';
+      viewDetail.style.display = (viewName === 'detail') ? 'block' : 'none';
+    }
+
+    [tabRegion, tabJob, tabTime].forEach(tab => {
+      tab.addEventListener('click', () => toggleView(tab.dataset.view));
+    });
+
+    btnDetailToggle.addEventListener('click', () => toggleView('detail'));
+
+    /* =========================================================
+       3. 1번 탭: 지역 렌더링 (선택됨/선택중 뱃지 완전 제거)
+       ========================================================= */
+    function renderRegionDepth1() {
+      regionDepth1List.innerHTML = '';
+      REGION_DATA.forEach(sido => {
+        const isSelected = (sido.id === state.activeSidoId);
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `nav-item-btn ${isSelected ? 'selected' : ''}`;
+        btn.innerHTML = `
+          <span>${sido.name}</span>
+          ${isSelected ? `<svg class="arrow-right" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>` : ''}
+        `;
+        btn.addEventListener('click', () => {
+          state.activeSidoId = sido.id;
+          state.activeSigunguName = null;
+          renderRegionDepth1();
+          renderRegionDepth2();
+          renderRegionDepth3();
+        });
+        regionDepth1List.appendChild(btn);
+      });
+    }
+
+    function renderRegionDepth2() {
+      regionDepth2List.innerHTML = '';
+      if (!state.activeSidoId) return;
+
+      const activeSido = REGION_DATA.find(s => s.id === state.activeSidoId);
+      if (!activeSido) return;
+
+      activeSido.sub.forEach(sigungu => {
+        const isSelected = (sigungu === state.activeSigunguName);
+        const isAllItem = sigungu.endsWith(' 전체');
+        const isTagSelected = state.selectedTags.some(t => t.type === 'region' && t.label === sigungu);
+
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `nav-item-btn ${isSelected ? 'selected' : ''} ${isTagSelected ? 'checked' : ''}`;
+        
+        // 텍스트 뱃지 일체 없이 체크 아이콘/화살표만 노출
+        btn.innerHTML = `
+          <span>${sigungu}</span>
+          ${isAllItem && isTagSelected ? `
+            <svg class="check-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          ` : !isAllItem ? `
+            <svg class="arrow-right" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+          ` : ''}
+        `;
+
+        btn.addEventListener('click', () => {
+          state.activeSigunguName = sigungu;
+
+          // 2dep '[시/도] 전체' 클릭 시 바로 선택 태그 추가/해제
+          if (isAllItem) {
+            if (isTagSelected) {
+              removeTagDirect('region', sigungu);
+              renderTags();
+            } else {
+              // 해당 시/도의 다른 하위 구/동 선택태그 모두 정리
+              state.selectedTags = state.selectedTags.filter(t => !(t.type === 'region' && t.sidoId === activeSido.id));
+              addTag('region', sigungu, 5, { sidoId: activeSido.id, sigungu: sigungu });
+            }
+          }
+
+          renderRegionDepth2();
+          renderRegionDepth3();
+        });
+
+        regionDepth2List.appendChild(btn);
+      });
+    }
+
+    function renderRegionDepth3() {
+      regionDepth3Checkboxes.innerHTML = '';
+
+      if (!state.activeSigunguName) {
+        regionDepth3Checkboxes.innerHTML = '<div class="empty-guide-box" style="grid-column: 1 / -1;">구/군을 선택해주세요</div>';
+        return;
+      }
+
+      // 2dep '전체' 선택 시 3dep 체크박스 없음 안내
+      if (state.activeSigunguName.endsWith(' 전체')) {
+        regionDepth3Checkboxes.innerHTML = `
+          <div class="empty-guide-box" style="grid-column: 1 / -1;">
+            하위 읍/면/동이 없는 전체 선택 지역입니다.
+          </div>
+        `;
+        return;
+      }
+
+      const activeSido = REGION_DATA.find(s => s.id === state.activeSidoId);
+      const dongs = DONG_DATA_MAP[state.activeSigunguName] || [
+        `${state.activeSigunguName} 전체`,
+        `${state.activeSigunguName} 1동`,
+        `${state.activeSigunguName} 2동`
+      ];
+
+      dongs.forEach(dong => {
+        const isChecked = state.selectedTags.some(t => t.type === 'region' && t.label === dong);
+        const label = document.createElement('label');
+        label.className = 'custom-check';
+
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.checked = isChecked;
+
+        checkbox.addEventListener('change', () => {
+          handleDongCheck(activeSido, state.activeSigunguName, dong, dongs, checkbox.checked);
+        });
+
+        label.appendChild(checkbox);
+        label.appendChild(document.createTextNode(' ' + dong));
+        regionDepth3Checkboxes.appendChild(label);
+      });
+    }
+
+    function handleDongCheck(activeSido, sigunguName, dong, allDongs, isChecked) {
+      const isAll = dong.endsWith(' 전체');
+      const sidoAllName = `${activeSido.name} 전체`;
+
+      if (isChecked) {
+        // 상위 '시/도 전체' 태그가 있으면 제거
+        removeTagDirect('region', sidoAllName);
+
+        if (isAll) {
+          // '구/군 전체' 선택 시 하위 개별 동 모두 제거
+          allDongs.forEach(d => {
+            if (d !== dong) removeTagDirect('region', d);
+          });
+          addTag('region', dong, 5, { sidoId: activeSido.id, sigungu: sigunguName });
+        } else {
+          // 개별 동 선택 시 '구/군 전체' 제거
+          const sigunguAllName = `${sigunguName} 전체`;
+          removeTagDirect('region', sigunguAllName);
+          addTag('region', dong, 5, { sidoId: activeSido.id, sigungu: sigunguName });
+        }
+      } else {
+        removeTagDirect('region', dong);
+        renderTags();
+      }
+
+      renderRegionDepth2();
+      renderRegionDepth3();
+    }
+
+    /* =========================================================
+       4. 2번 탭: 업직종 렌더링 (전체 ↔ 개별직종 상호 해제)
+       ========================================================= */
+    function renderJobDepth1() {
+      jobDepth1List.innerHTML = '';
+      JOB_DATA.forEach(category => {
+        const isSelected = (category.id === state.activeJobId);
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `nav-item-btn ${isSelected ? 'selected' : ''}`;
+        btn.innerHTML = `
+          <span>${category.name}</span>
+          ${isSelected ? `<svg class="arrow-right" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>` : ''}
+        `;
+        btn.addEventListener('click', () => {
+          state.activeJobId = category.id;
+          renderJobDepth1();
+          renderJobDepth2();
+        });
+        jobDepth1List.appendChild(btn);
+      });
+    }
+
+    function renderJobDepth2() {
+      jobDepth2Checkboxes.innerHTML = '';
+      if (!state.activeJobId) return;
+
+      const activeCat = JOB_DATA.find(c => c.id === state.activeJobId);
+      if (!activeCat) return;
+
+      activeCat.sub.forEach(subItem => {
+        const isChecked = state.selectedTags.some(t => t.type === 'job' && t.label === subItem);
+        const label = document.createElement('label');
+        label.className = 'custom-check';
+
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.checked = isChecked;
+
+        checkbox.addEventListener('change', () => {
+          handleJobCheck(activeCat, subItem, checkbox.checked);
+        });
+
+        label.appendChild(checkbox);
+        label.appendChild(document.createTextNode(' ' + subItem));
+        jobDepth2Checkboxes.appendChild(label);
+      });
+    }
+
+    function handleJobCheck(category, subItem, isChecked) {
+      const allItemName = `${category.name} 전체`;
+      const isAll = (subItem === allItemName);
+
+      if (isChecked) {
+        if (isAll) {
+          // 1) '전체' 선택 시: 같은 직종군의 개별 직종 태그를 모두 제거
+          category.sub.forEach(item => {
+            if (item !== allItemName) {
+              removeTagDirect('job', item);
+            }
+          });
+          addTag('job', subItem, 5, { categoryId: category.id });
+        } else {
+          // 2) 개별 직종 선택 시: '전체' 태그가 선택되어 있다면 즉시 제거
+          removeTagDirect('job', allItemName);
+          addTag('job', subItem, 5, { categoryId: category.id });
+        }
+      } else {
+        removeTagDirect('job', subItem);
+        renderTags();
+      }
+
+      renderJobDepth2();
+    }
+
+    /* =========================================================
+       5. 3번 탭 & 상세조건 필터
+       ========================================================= */
+    function initTimeFilters() {
+      const workTimeCheckboxes = document.querySelectorAll('input[name="workTime"]:not(#chk-time-custom)');
+      workTimeCheckboxes.forEach(cb => {
+        cb.addEventListener('change', () => {
+          if (cb.checked) {
+            addTag('time', cb.value, 5, { category: 'workTime', value: cb.value });
+          } else {
+            removeTagDirect('time', cb.value);
+            renderTags();
+          }
+        });
+      });
+
+      function syncCustomTimeTag() {
+        const start = selTimeStart.value;
+        const end = selTimeEnd.value;
+        const existingIdx = state.selectedTags.findIndex(t => t.type === 'time' && t.category === 'workTimeCustom');
+
+        if (chkTimeCustom.checked) {
+          const displayLabel = (start || end) ? `시간: ${start || '00:00'}~${end || '24:00'}` : '시간: 직접선택';
+          
+          if (existingIdx > -1) {
+            state.selectedTags[existingIdx].label = displayLabel;
+          } else {
+            if (state.selectedTags.filter(t => t.type === 'time').length >= 5) {
+              showToast('시간별 조건은 최대 5개까지 선택 가능합니다.');
+              chkTimeCustom.checked = false;
+              selTimeStart.value = '';
+              selTimeEnd.value = '';
+              return;
+            }
+            state.selectedTags.push({
+              type: 'time',
+              label: displayLabel,
+              category: 'workTimeCustom',
+              value: '직접선택'
+            });
+          }
+          renderTags();
+        } else {
+          if (existingIdx > -1) {
+            state.selectedTags.splice(existingIdx, 1);
+            selTimeStart.value = '';
+            selTimeEnd.value = '';
+            renderTags();
+          }
+        }
+      }
+
+      chkTimeCustom.addEventListener('change', syncCustomTimeTag);
+      selTimeStart.addEventListener('change', () => {
+        chkTimeCustom.checked = true;
+        syncCustomTimeTag();
+      });
+      selTimeEnd.addEventListener('change', () => {
+        chkTimeCustom.checked = true;
+        syncCustomTimeTag();
+      });
+
+      const workTimeOptionCheckboxes = document.querySelectorAll('input[name="workTimeOption"]');
+      workTimeOptionCheckboxes.forEach(cb => {
+        cb.addEventListener('change', () => {
+          if (cb.checked) {
+            addTag('time', cb.value, 5, { category: 'workTimeOption', value: cb.value });
+          } else {
+            removeTagDirect('time', cb.value);
+            renderTags();
+          }
+        });
+      });
+
+      const workDayRadios = document.querySelectorAll('input[name="workDay"]');
+      workDayRadios.forEach(rb => {
+        rb.addEventListener('change', () => {
+          if (rb.checked) {
+            state.selectedTags = state.selectedTags.filter(t => !(t.type === 'time' && t.category === 'workDay'));
+            state.selectedTags.push({
+              type: 'time',
+              label: rb.value,
+              category: 'workDay',
+              value: rb.value
+            });
+            renderTags();
+          }
+        });
+      });
+
+      const workPeriodCheckboxes = document.querySelectorAll('input[name="workPeriod"]');
+      workPeriodCheckboxes.forEach(cb => {
+        cb.addEventListener('change', () => {
+          if (cb.checked) {
+            addTag('time', cb.value, 5, { category: 'workPeriod', value: cb.value });
+          } else {
+            removeTagDirect('time', cb.value);
+            renderTags();
+          }
+        });
+      });
+    }
+
+    function syncTimeFilterUI(tag) {
+      if (tag.category === 'workTime') {
+        const cb = document.querySelector(`input[name="workTime"][value="${tag.value}"]`);
+        if (cb) cb.checked = false;
+      } else if (tag.category === 'workTimeCustom') {
+        chkTimeCustom.checked = false;
+        selTimeStart.value = '';
+        selTimeEnd.value = '';
+      } else if (tag.category === 'workTimeOption') {
+        const cb = document.querySelector(`input[name="workTimeOption"][value="${tag.value}"]`);
+        if (cb) cb.checked = false;
+      } else if (tag.category === 'workDay') {
+        const rb = document.querySelector(`input[name="workDay"][value="${tag.value}"]`);
+        if (rb) rb.checked = false;
+      } else if (tag.category === 'workPeriod') {
+        const cb = document.querySelector(`input[name="workPeriod"][value="${tag.value}"]`);
+        if (cb) cb.checked = false;
+      }
+    }
+
+    payTypeRadios.forEach(radio => {
+      radio.addEventListener('change', () => {
+        const selected = document.querySelector('input[name="payType"]:checked');
+        if (!selected || selected.value === '회사내규') {
+          payInputAmount.disabled = true;
+          payInputAmount.value = '';
+        } else {
+          payInputAmount.disabled = false;
+          payInputAmount.focus();
+        }
+      });
+    });
+
+    payInputAmount.addEventListener('input', (e) => {
+      const rawValue = e.target.value.replace(/[^0-9]/g, '');
+      e.target.value = rawValue ? Number(rawValue).toLocaleString() : '';
+    });
+
+    btnOpenBenefits.addEventListener('click', () => {
+      tempSelectedItems = new Set(state.selectedBenefits);
+      modalItemsContainer.innerHTML = '';
+
+      BENEFITS_ITEMS.forEach(item => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `btn-option-pill ${tempSelectedItems.has(item) ? 'selected' : ''}`;
+        btn.textContent = item;
+        btn.addEventListener('click', () => {
+          if (tempSelectedItems.has(item)) tempSelectedItems.delete(item);
+          else tempSelectedItems.add(item);
+          btn.classList.toggle('selected');
+        });
+        modalItemsContainer.appendChild(btn);
+      });
+
+      optionModalOverlay.classList.add('show');
+    });
+
+    btnModalClose.addEventListener('click', () => optionModalOverlay.classList.remove('show'));
+    btnModalConfirm.addEventListener('click', () => {
+      state.selectedBenefits = Array.from(tempSelectedItems);
+      benefitsTagsContainer.innerHTML = '';
+      state.selectedBenefits.forEach(item => {
+        const chip = document.createElement('div');
+        chip.className = 'chip-item';
+        chip.innerHTML = `<span>${item}</span><button type="button" class="btn-remove-chip">✕</button>`;
+        chip.querySelector('.btn-remove-chip').addEventListener('click', () => {
+          state.selectedBenefits = state.selectedBenefits.filter(i => i !== item);
+          chip.remove();
+        });
+        benefitsTagsContainer.appendChild(chip);
+      });
+      optionModalOverlay.classList.remove('show');
+    });
+
+    /* =========================================================
+       6. 공통 태그 바 및 전체 초기화 관리
+       ========================================================= */
+    function renderTags() {
+      selectedTagsContainer.innerHTML = '';
+
+      state.selectedTags.forEach((tag, index) => {
+        const tagEl = document.createElement('div');
+        let badgeClass = 'tag-badge';
+        if (tag.type === 'region') badgeClass += ' tag-region';
+        else if (tag.type === 'job') badgeClass += ' tag-job';
+        else if (tag.type === 'time') badgeClass += ' tag-time';
+        else if (tag.type === 'keyword') badgeClass += ' tag-keyword';
+
+        tagEl.className = badgeClass;
+        tagEl.innerHTML = `
+          <span>${tag.label}</span>
+          <button type="button" class="btn-remove-tag" data-index="${index}">✕</button>
+        `;
+
+        selectedTagsContainer.appendChild(tagEl);
+      });
+
+      updateCounts();
+    }
+
+    function updateCounts() {
+      const regionCount = state.selectedTags.filter(t => t.type === 'region').length;
+      const jobCount = state.selectedTags.filter(t => t.type === 'job').length;
+      const timeCount = state.selectedTags.filter(t => t.type === 'time').length;
+
+      countRegionTab.textContent = `${regionCount}/5`;
+      countJobTab.textContent = `${jobCount}/5`;
+      if (countTimeTab) countTimeTab.textContent = `${timeCount}/5`;
+    }
+
+    function addTag(type, label, maxLimit = 5, extraData = {}) {
+      const currentCount = state.selectedTags.filter(t => t.type === type).length;
+      if (currentCount >= maxLimit) {
+        showToast(`최대 ${maxLimit}개까지 선택 가능합니다.`);
+        renderRegionDepth2();
+        renderRegionDepth3();
+        renderJobDepth2();
+        return;
+      }
+
+      if (!state.selectedTags.some(t => t.type === type && t.label === label)) {
+        state.selectedTags.push({ type, label, ...extraData });
+        renderTags();
+      }
+    }
+
+    function removeTagDirect(type, label) {
+      const idx = state.selectedTags.findIndex(t => t.type === type && t.label === label);
+      if (idx > -1) {
+        const removed = state.selectedTags.splice(idx, 1)[0];
+        if (removed.type === 'time') syncTimeFilterUI(removed);
+        return true;
+      }
+      return false;
+    }
+
+    selectedTagsContainer.addEventListener('click', (e) => {
+      const removeBtn = e.target.closest('.btn-remove-tag');
+      if (removeBtn) {
+        const index = parseInt(removeBtn.dataset.index, 10);
+        const removedTag = state.selectedTags.splice(index, 1)[0];
+        if (removedTag && removedTag.type === 'time') syncTimeFilterUI(removedTag);
+        
+        renderTags();
+        renderRegionDepth2();
+        renderRegionDepth3();
+        renderJobDepth2();
+      }
+    });
+
+    btnResetAll.addEventListener('click', () => {
+      state.selectedTags = [];
+      state.activeSigunguName = null;
+      topKeywordInput.value = '';
+      
+      document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+      document.querySelectorAll('input[type="radio"]').forEach(rb => rb.checked = false);
+      document.querySelectorAll('select').forEach(sel => sel.selectedIndex = 0);
+      
+      if (payInputAmount) {
+        payInputAmount.value = '';
+        payInputAmount.disabled = true;
+      }
+
+      state.selectedBenefits = [];
+      benefitsTagsContainer.innerHTML = '';
+
+      renderTags();
+      renderRegionDepth1();
+      renderRegionDepth2();
+      renderRegionDepth3();
+      renderJobDepth1();
+      renderJobDepth2();
+      showToast('모든 조건이 초기화되었습니다.');
+    });
+
+    btnApplyKeyword.addEventListener('click', () => {
+      const val = topKeywordInput.value.trim();
+      if (!val) {
+        showToast('검색할 키워드를 입력해주세요.');
+        return;
+      }
+
+      if (!state.selectedTags.some(t => t.type === 'keyword' && t.label === val)) {
+        state.selectedTags.push({ type: 'keyword', label: val });
+        renderTags();
+        topKeywordInput.value = '';
+      }
+    });
+
+    topKeywordInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') btnApplyKeyword.click();
+    });
+
+    btnSubmitSearch.addEventListener('click', () => {
+      const labels = state.selectedTags.map(t => t.label);
+      showToast(labels.length > 0 ? `[${labels.join(', ')}] 검색을 진행합니다.` : '선택된 조건으로 검색합니다.');
+    });
+
+    // 초기 실행
+    renderRegionDepth1();
+    renderRegionDepth2();
+    renderRegionDepth3();
+    renderJobDepth1();
+    renderJobDepth2();
+    initTimeFilters();
+    renderTags();
+  </script>
+</body>
+</html>

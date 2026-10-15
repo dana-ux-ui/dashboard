@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3-Depth 접이식 레이어 사이드바 대시보드</title>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- 사이드바 -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <span class="menu-icon">🚀</span>
+      <span class="logo-text">System Admin</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <ul class="menu-list depth-1">
+        <li class="active">
+          <a href="#">
+            <span class="menu-icon">📊</span>
+            <span class="menu-text">대시보드</span>
+          </a>
+        </li>
+
+        <!-- 3-Depth 메뉴 -->
+        <li class="has-sub">
+          <button class="menu-btn">
+            <span class="menu-icon">👥</span>
+            <span class="menu-text">사용자 관리</span>
+            <span class="arrow">▶</span>
+          </button>
+          
+          <ul class="sub-menu depth-2">
+            <li class="has-sub">
+              <button class="menu-btn">
+                <span class="menu-text">회원 목록</span>
+                <span class="arrow">▶</span>
+              </button>
+              <ul class="sub-menu depth-3">
+                <li><a href="#">전체 회원 조회</a></li>
+                <li><a href="#">탈퇴 요청 목록</a></li>
+                <li><a href="#">휴면 계정 관리</a></li>
+              </ul>
+            </li>
+
+            <li class="has-sub">
+              <button class="menu-btn">
+                <span class="menu-text">권한 및 그룹</span>
+                <span class="arrow">▶</span>
+              </button>
+              <ul class="sub-menu depth-3">
+                <li><a href="#">관리자 권한 설정</a></li>
+                <li><a href="#">접근 그룹 생성</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+
+        <!-- 2-Depth 메뉴 -->
+        <li class="has-sub">
+          <button class="menu-btn">
+            <span class="menu-icon">⚙️</span>
+            <span class="menu-text">시스템 설정</span>
+            <span class="arrow">▶</span>
+          </button>
+          <ul class="sub-menu depth-2">
+            <li><a href="#">기본 환경 설정</a></li>
+            <li><a href="#">보안 및 로그</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- 메인 영역 -->
+  <div class="main-container">
+    <header class="header">
+      <div class="header-left">
+        <button class="toggle-btn" id="toggleSidebar">☰</button>
+        <span style="font-weight: 600; color: #475569;">운영 관리 시스템</span>
+      </div>
+      <div class="header-right">
+        <div class="user-profile">
+          <div class="avatar">A</div>
+          <span>김관리 팀장</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- 메인 콘텐츠 : 전체 회원 조회 -->
+    <main class="content">
+        <!-- 페이지 헤더 및 버튼 -->
+        <div class="page-header">
+          <div class="page-title-group">
+            <!-- 제목과 브레드크럼을 한 줄로 정렬 -->
+          <div class="title-with-breadcrumb">
+            <h1 class="page-title">전체 회원 조회</h1>
+            
+            <!-- 📌 브레드크럼 영역 -->
+            <nav class="breadcrumb">
+              <a href="#" class="breadcrumb-item">홈</a>
+              <span class="breadcrumb-divider">›</span>
+              <a href="#" class="breadcrumb-item">사용자 관리</a>
+              <span class="breadcrumb-divider">›</span>
+              <a href="#" class="breadcrumb-item">회원 목록</a>
+              <span class="breadcrumb-divider">›</span>
+              <span class="breadcrumb-item active">전체 회원 조회</span>
+            </nav>
+          </div>
+          
+          <p class="page-subtext">등록된 회원 목록을 조회하고 상태 관리 및 상세 정보를 확인할 수 있습니다.</p>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn btn-outline">엑셀 다운로드</button>
+          <button class="btn btn-primary" id="btnOpenUserModal">+ 신규 회원 등록</button>
+        </div>
+      </div>
+
+      <!-- 검색 및 필터 영역 -->
+      <section class="filter-panel">
+        <form id="searchForm" onsubmit="return false;">
+          <div class="filter-grid">
+            
+            <!-- 항목들에 detail-filter 같은 별도 클래스를 넣을 필요가 없습니다. -->
+            <div class="filter-group">
+              <label class="filter-label">검색어</label>
+              <div class="input-group">
+                <select class="form-select" style="width: 95px; flex-shrink: 0;" id="searchType">
+                  <option value="name">회원명</option>
+                  <option value="email">이메일</option>
+                  <option value="phone">연락처</option>
+                </select>
+                <input type="text" class="form-input" id="searchKeyword" placeholder="검색어를 입력하세요">
+              </div>
+            </div>
+
+            <div class="filter-group">
+              <label class="filter-label">회원 상태</label>
+              <select class="form-select" id="statusFilter">
+                <option value="all">전체 상태</option>
+                <option value="active">정상</option>
+                <option value="pending">승인대기</option>
+                <option value="suspended">정지</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label class="filter-label">가입일자</label>
+              <div class="input-group">
+                <input type="date" class="form-input" id="startDate">
+                <span style="align-self: center; color: #94a3b8;">~</span>
+                <input type="date" class="form-input" id="endDate">
+              </div>
+            </div>
+
+            <div class="filter-group">
+              <label class="filter-label">회원 등급</label>
+              <select class="form-select" id="gradeFilter">
+                <option value="all">전체 등급</option>
+                <option value="bronze">브론즈</option>
+                <option value="silver">실버</option>
+                <option value="gold">골드</option>
+                <option value="vip">VIP</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label class="filter-label">마케팅 동의</label>
+              <select class="form-select" id="marketingFilter">
+                <option value="all">전체</option>
+                <option value="y">동의 (Y)</option>
+                <option value="n">미동의 (N)</option>
+              </select>
+            </div>
+
+          </div>
+
+          <!-- 하단 버튼 구역 -->
+          <div class="filter-actions">
+            <button type="button" class="btn btn-text toggle-detail-btn" id="btnToggleDetail">
+              <span>상세검색 펼치기</span>
+              <span class="toggle-icon">▾</span>
+            </button>
+
+            <div class="action-buttons">
+              <button type="reset" class="btn btn-text">초기화</button>
+              <button type="button" class="btn btn-primary" id="btnSearch">검색하기</button>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <!-- 2. 회원 리스트 테이블 영역 -->
+      <section class="table-card">
+        <!-- 테이블 상단 툴바 -->
+        <div class="table-toolbar">
+          <div class="toolbar-left">
+            <span>총 <strong id="totalCount" style="color: #0284c7;">5</strong>명의 회원이 검색되었습니다.</span>
+          </div>
+          <div class="toolbar-right">
+            <button class="btn btn-sm btn-outline" id="btnBatchDelete">선택 삭제</button>
+            <select class="form-select form-select-sm" id="pageSize">
+              <option value="10">10개씩 보기</option>
+              <option value="20">20개씩 보기</option>
+              <option value="50">50개씩 보기</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 데이터 테이블 -->
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th style="width: 40px; text-align: center;">
+                  <input type="checkbox" id="checkAll">
+                </th>
+                <th>회원코드</th>
+                <th>회원명</th>
+                <th>이메일</th>
+                <th>연락처</th>
+                <th>가입일자</th>
+                <th>상태</th>
+                <th style="text-align: center;">관리</th>
+              </tr>
+            </thead>
+            <tbody id="userTableBody">
+              <tr>
+                <td style="text-align: center;"><input type="checkbox" class="user-check" value="USR-001"></td>
+                <td class="font-mono">USR-2026-001</td>
+                <td class="font-bold">김민준</td>
+                <td>minjun.kim@example.com</td>
+                <td>010-1234-5678</td>
+                <td>2026-08-10</td>
+                <td><span class="status-badge success">정상</span></td>
+                <td style="text-align: center;">
+                  <button class="btn btn-xs btn-outline">상세</button>
+                </td>
+              </tr>
+              <tr>
+                <td style="text-align: center;"><input type="checkbox" class="user-check" value="USR-002"></td>
+                <td class="font-mono">USR-2026-002</td>
+                <td class="font-bold">이지은</td>
+                <td>jieun.lee@example.com</td>
+                <td>010-9876-5432</td>
+                <td>2026-08-09</td>
+                <td><span class="status-badge pending">승인대기</span></td>
+                <td style="text-align: center;">
+                  <button class="btn btn-xs btn-outline">상세</button>
+                </td>
+              </tr>
+              <tr>
+                <td style="text-align: center;"><input type="checkbox" class="user-check" value="USR-003"></td>
+                <td class="font-mono">USR-2026-003</td>
+                <td class="font-bold">박현우</td>
+                <td>hyunwoo.park@example.com</td>
+                <td>010-5555-1234</td>
+                <td>2026-08-05</td>
+                <td><span class="status-badge success">정상</span></td>
+                <td style="text-align: center;">
+                  <button class="btn btn-xs btn-outline">상세</button>
+                </td>
+              </tr>
+              <tr>
+                <td style="text-align: center;"><input type="checkbox" class="user-check" value="USR-004"></td>
+                <td class="font-mono">USR-2026-004</td>
+                <td class="font-bold">최수아</td>
+                <td>sua.choi@example.com</td>
+                <td>010-7777-8888</td>
+                <td>2026-07-28</td>
+                <td><span class="status-badge danger">정지</span></td>
+                <td style="text-align: center;">
+                  <button class="btn btn-xs btn-outline">상세</button>
+                </td>
+              </tr>
+              <tr>
+                <td style="text-align: center;"><input type="checkbox" class="user-check" value="USR-005"></td>
+                <td class="font-mono">USR-2026-005</td>
+                <td class="font-bold">정윤호</td>
+                <td>yoonho.jung@example.com</td>
+                <td>010-3333-4444</td>
+                <td>2026-07-15</td>
+                <td><span class="status-badge success">정상</span></td>
+                <td style="text-align: center;">
+                  <button class="btn btn-xs btn-outline">상세</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- 하단 페이지네이션 -->
+        <div class="pagination-container">
+          <ul class="pagination">
+            <li class="page-item disabled"><a href="#">&laquo;</a></li>
+            <li class="page-item active"><a href="#">1</a></li>
+            <li class="page-item"><a href="#">2</a></li>
+            <li class="page-item"><a href="#">3</a></li>
+            <li class="page-item"><a href="#">&raquo;</a></li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+
+    
+  </div>
+ 
+
+
+  <!-- 📌 신규 회원 등록 모달 레이어 팝업 -->
+  <div class="modal-overlay" id="userRegisterModal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h2 class="modal-title">신규 회원 등록</h2>
+        <button class="modal-close-btn" id="btnCloseModal">&times;</button>
+      </div>
+
+      <form id="registerUserForm">
+        <div class="modal-body">
+          <div class="form-grid">
+            
+            <div class="form-row">
+              <label class="form-label required">회원명</label>
+              <input type="text" class="form-input" id="regName" placeholder="홍길동" required>
+            </div>
+
+            <div class="form-row">
+              <label class="form-label required">이메일</label>
+              <input type="email" class="form-input" id="regEmail" placeholder="example@domain.com" required>
+            </div>
+
+            <div class="form-row">
+              <label class="form-label required">연락처</label>
+              <input type="tel" class="form-input" id="regPhone" placeholder="010-0000-0000" required>
+            </div>
+
+            <div class="form-row">
+              <label class="form-label required">회원 등급</label>
+              <select class="form-select" id="regGrade" required>
+                <option value="">선택하세요</option>
+                <option value="bronze">브론즈</option>
+                <option value="silver">실버</option>
+                <option value="gold">골드</option>
+                <option value="vip">VIP</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <label class="form-label required">회원 상태</label>
+              <select class="form-select" id="regStatus" required>
+                <option value="active">정상</option>
+                <option value="pending">승인대기</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <label class="form-label">마케팅 동의</label>
+              <div class="checkbox-group">
+                <label class="checkbox-label">
+                  <input type="checkbox" id="regMarketing"> SMS/이메일 수신 동의
+                </label>
+              </div>
+            </div>
+
+            <div class="form-row full-width">
+              <label class="form-label">관리자 메모</label>
+              <textarea class="form-textarea" id="regMemo" rows="3" placeholder="특이사항을 입력하세요."></textarea>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" id="btnCancelModal">취소</button>
+          <button type="submit" class="btn btn-primary">등록완료</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/layout.js"></script>
+  <script src="js/sub.js"></script>
+</body>
+</html>
